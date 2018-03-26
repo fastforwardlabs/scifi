@@ -1,0 +1,317 @@
+import styled from 'styled-components'
+import chroma from 'chroma-js'
+import Link from 'gatsby-link'
+
+let line_height = 1.45
+
+export let lh = multiple => line_height * multiple + 'rem'
+export let lh_raw = multiple => line_height * multiple
+export let lh05 = lh(0.5)
+export let lh1 = lh(1)
+
+export let breakpoint = '@media (max-width: 560px)'
+
+export let colors = {
+  cyan: '#00dcec',
+}
+
+let fsm = multiple => line_height * multiple / 1.19 + 'rem'
+export let Text = styled.span`
+  ${props => {
+    return `
+      ${props.bold ? 'font-weight: bold;' : ''}
+      ${props.italic ? 'font-style: italic;' : ''}
+      ${props.fsm ? `font-size: ${fsm(props.fsm)}; line-height: 1.19;` : ''}
+      ${props.allcaps ? `text-transform: uppercase;` : ''}
+      ${props.color ? `color: ${props.color}` : ''}
+    `
+  }};
+`
+
+export let Container = styled.div`
+  position: relative;
+  padding-top: ${lh1};
+  padding-left: ${lh1};
+  padding-right: ${lh1};
+  ${breakpoint} {
+    padding-left: ${lh(0.5)};
+    padding-right: ${lh(0.5)};
+  }
+`
+
+export let LinkBlock = styled(Link)`
+  display: block;
+  color: #222;
+  text-decoration: none;
+`
+
+export let Indent = styled.div`
+  padding-left: ${lh1};
+  ${breakpoint} {
+    padding-left: 0;
+  }
+`
+
+export let WhiteHighlight = styled.span`
+  padding: 0.15em 0;
+  background: #fff;
+  box-shadow: -${lh(0.25)} 0 0 #fff, ${lh(0.25)} 0 0 #fff;
+`
+
+export let Highlight = styled.span`
+  ${props => {
+    let highlight
+    if (props.bg) {
+      highlight = chroma(props.bg)
+        .brighten(0.5)
+        .hex()
+    } else {
+      highlight = chroma(colors.cyan)
+        .brighten(0.5)
+        .desaturate(0.8)
+        .hex()
+    }
+    return `
+    padding: ${props.is_title ? `0` : `0.15em 0;`}
+    box-shadow: ${
+      props.is_title
+        ? `-${lh(0.5)} 0 0 ${highlight}, ${lh(0.5)} 0 0 ${highlight};`
+        : `-${lh(0.25)} 0 0 ${highlight}, ${lh(0.25)} 0 0 ${highlight};`
+    }
+    background: ${highlight};
+    transition: all 0.1s linear;`
+  }};
+`
+
+export let UnderlineInnerLink = styled.span`
+  ${props => {
+    let bg = chroma(props.bg)
+      .brighten(0.5)
+      .hex()
+    return `
+      padding-bottom: 0.15em;
+      background-position: 0 0.95em;
+      background-size: 1em 0.3em;
+      background-repeat: repeat-x;
+      background-image: linear-gradient(
+        ${bg},
+        ${bg}
+      );
+      transition: all 0.1s linear;
+    `
+  }};
+`
+
+export let UnderlineLink = styled(Link)`
+  ${props => {
+    let light_bg, bg
+    if (props.bg) {
+      light_bg = chroma(props.bg)
+        .brighten(0.5)
+        .hex()
+      bg = props.bg
+    } else {
+      light_bg = chroma(colors.cyan)
+        .brighten(0.5)
+        .desaturate(0.8)
+        .hex()
+      bg = colors.cyan
+    }
+    return `
+      color: #222;
+      text-decoration: none;
+      padding-bottom: 0.15em;
+      background-position: 0 0.95em;
+      background-size: 1em 0.3em;
+      background-repeat: repeat-x;
+      background-image: linear-gradient(
+        ${light_bg},
+        ${light_bg}
+      );
+      transition: all 0.1s linear;
+      &:hover {
+        background-image: linear-gradient(
+          ${bg},
+          ${bg}
+        );
+      }
+    `
+  }};
+`
+
+// There is probably a cleaner solution to this
+export let ExternalUnderlineLink = styled.a`
+  ${props => {
+    let light_bg, bg
+    if (props.bg) {
+      light_bg = chroma(props.bg)
+        .brighten(0.5)
+        .hex()
+      bg = props.bg
+    } else {
+      light_bg = chroma(colors.cyan)
+        .brighten(0.5)
+        .desaturate(0.8)
+        .hex()
+      bg = colors.cyan
+    }
+    return `
+      color: #222;
+      text-decoration: none;
+      padding-bottom: 0.15em;
+      background-position: 0 0.95em;
+      background-size: 1em 0.3em;
+      background-repeat: repeat-x;
+      background-image: linear-gradient(
+        ${light_bg},
+        ${light_bg}
+      );
+      transition: all 0.1s linear;
+      &:hover {
+        background-image: linear-gradient(
+          ${bg},
+          ${bg}
+        );
+      }
+    `
+  }};
+`
+
+export let UnderlineLinkContainer = styled.div`
+  a {
+    ${props => {
+      let light_bg, bg
+      if (props.bg) {
+        light_bg = chroma(props.bg)
+          .brighten(0.5)
+          .hex()
+        bg = props.bg
+      } else {
+        light_bg = chroma(colors.cyan)
+          .brighten(0.5)
+          .desaturate(0.8)
+          .hex()
+        bg = colors.cyan
+      }
+      return `
+        color: #222;
+        text-decoration: none;
+        padding-bottom: 0.15em;
+        background-position: 0 0.95em;
+        background-size: 1em 0.3em;
+        background-repeat: repeat-x;
+        background-image: linear-gradient(
+          ${light_bg},
+          ${light_bg}
+        );
+        transition: all 0.1s linear;
+        &:hover {
+          background-image: linear-gradient(
+            ${bg},
+            ${bg}
+          );
+        }
+      `
+    }};
+  }
+`
+
+export let LinkSpacer = styled.span`
+  display: inline-block;
+  width: ${lh05};
+`
+
+export let HighlightParentLink = styled(Link)`
+  display: block;
+  color: #222;
+  text-decoration: none;
+  &:hover ${Highlight} {
+    ${props => {
+      let bg
+      if (props.bg) {
+        bg = props.bg
+      } else {
+        bg = colors.cyan
+      }
+      return `
+      box-shadow: ${
+        props.is_title
+          ? `-${lh(0.5)} 0 0 ${bg}, ${lh(0.5)} 0 0 ${bg};`
+          : `-${lh(0.25)} 0 0 ${bg}, ${lh(0.25)} 0 0 ${bg};`
+      }
+      background: ${bg};`
+    }};
+  }
+  &:hover ${UnderlineInnerLink} {
+    ${props => {
+      let bg
+      if (props.bg) {
+        bg = props.bg
+      } else {
+        bg = colors.cyan
+      }
+      return `background-image: linear-gradient(
+        ${bg},
+        ${bg}
+      )`
+    }};
+  }
+`
+
+export let AbsStretch = styled.div`
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+`
+
+export let Relative = styled.div`
+  position: relative;
+`
+
+export let WidthBreakout = styled.div`
+  position: relative;
+  margin-left: -${lh1};
+  margin-right: -${lh1};
+  ${breakpoint} {
+    margin-left: -${lh05};
+    margin-right: -${lh05};
+  }
+`
+
+export let Topper = styled.div`
+  position: relative;
+  height: ${lh(2)};
+  margin-bottom: -${lh1};
+  ${props => `background: ${props.bg};`};
+  &:after {
+    content: ' ';
+    position: absolute;
+    top: ${lh1};
+    left: ${lh05};
+    right: ${lh05};
+    background: #fff;
+    height: ${lh1};
+  }
+  ${breakpoint} {
+    &:after {
+      left: ${lh(0.25)};
+      right: ${lh(0.25)};
+    }
+  }
+`
+
+export let Bottomer = Topper.extend`
+  z-index: -1;
+  margin-bottom: 0;
+  margin-top: -${lh(2)};
+  &:after {
+    top: auto;
+    bottom: ${lh1};
+  }
+`
+
+export let Seravek = styled.div`
+  font-family: 'SeravekWebBasic';
+`

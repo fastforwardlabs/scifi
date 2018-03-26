@@ -1,0 +1,57 @@
+@font-face {
+  font-family: ChambersSansWeb;
+  src: url('../fonts/6e68411fd97d_subset/6e68411fd97d_subset.woff2') format('woff2'), url('../fonts/6e68411fd97d_subset/6e68411fd97d_subset.woff') format('woff'), url('../fonts/6e68411fd97d_subset/6e68411fd97d_subset.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: ChambersSansWeb;
+  src: url("../fonts/1385720/2dc6e720-12de-4f42-b923-1704efa9c107.woff2") format("woff2"), url("../fonts/1385720/13b5a169-2a28-4554-b4e8-6deba5a36926.woff") format("woff"), url("../fonts/1385720/bb1005e3-aac7-4bf1-8020-3dd984825855.ttf") format("truetype");
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: ChambersSansWeb;
+  src: url('../fonts/1464734/fa46ac36-9953-4580-8b48-93fe6deebb45.woff2') format('woff2'), url('../fonts/1464734/f2dcf0a8-0d00-4fe6-9fc7-570bc7801cb2.woff') format('woff'), url('../fonts/1464734/fa247f7b-e6c6-484d-b86c-6376483eccbf.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: ChambersSansWeb;
+  src: url('../fonts/1464738/c5d6fe40-4f9b-410c-8332-143de7007d10.woff2') format('woff2'), url('../fonts/1464738/62b38225-dff1-43ee-8238-c3d5876911cd.woff') format('woff'), url('../fonts/1464738/1d6bff39-3f05-4706-a206-152082998317.ttf') format('truetype');
+  font-weight: bold;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'SeravekWebBasic';
+  src: url('../fonts/SeravekWebBasicRegular/SeravekWebBasicRegular.eot?#iefix') format('embedded-opentype'), url('../fonts/SeravekWebBasicRegular/SeravekWebBasicRegular.woff2') format('woff2'), url('../fonts/SeravekWebBasicRegular/SeravekWebBasicRegular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SeravekWebBasic';
+  src: url('../fonts/SeravekWebBasicRegularItalic/SeravekWebBasicRegularItalic.eot?#iefix') format('embedded-opentype'), url('../fonts/SeravekWebBasicRegularItalic/SeravekWebBasicRegularItalic.woff2') format('woff2'), url('../fonts/SeravekWebBasicRegularItalic/SeravekWebBasicRegularItalic.woff') format('woff');
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'SeravekWebBasic';
+  src: url('../fonts/SeravekWebBasicBold/SeravekWebBasicBold.eot?#iefix') format('embedded-opentype'), url('../fonts/SeravekWebBasicBold/SeravekWebBasicBold.woff2') format('woff2'), url('../fonts/SeravekWebBasicBold/SeravekWebBasicBold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SeravekWebBasic';
+  src: url('../fonts/SeravekWebBasicBoldItalic/SeravekWebBasicBoldItalic.eot?#iefix') format('embedded-opentype'), url('../fonts/SeravekWebBasicBoldItalic/SeravekWebBasicBoldItalic.woff2') format('woff2'), url('../fonts/SeravekWebBasicBoldItalic/SeravekWebBasicBoldItalic.woff') format('woff');
+  font-weight: 700;
+  font-style: italic;
+}
+
+
