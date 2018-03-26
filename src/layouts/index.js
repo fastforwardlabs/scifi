@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
 import styled from 'styled-components'
+import { withPrefix } from 'gatsby-link'
 import Header from '../components/Header.js'
 import StoryLinks from '../components/StoryLinks.js'
 import About from '../components/About.js'
@@ -25,10 +26,17 @@ export default class TemplateWrapper extends React.Component {
     let { children, data, location } = this.props
 
     // check if report page
-    let report_page_check = location.pathname.substr(0, 3)
+    let prefix_length = withPrefix('/').length - 1
+    let report_page_check = location.pathname.substr(
+      0 + prefix_length,
+      3 + prefix_length
+    )
     let report_page = null
     if ((report_page_check = '/ff')) {
-      report_page = location.pathname.substr(1, 4)
+      report_page = location.pathname.substr(
+        1 + prefix_length,
+        4 + prefix_length
+      )
     }
 
     // filter current page from stories list

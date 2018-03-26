@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import chroma from 'chroma-js'
 import Link from 'gatsby-link'
 
-let line_height = 1.45
+export let line_height = 1.45
 
 export let lh = multiple => line_height * multiple + 'rem'
 export let lh_raw = multiple => line_height * multiple

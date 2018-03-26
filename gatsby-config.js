@@ -1,7 +1,8 @@
 module.exports = {
   siteMetadata: {
-    title: 'Gatsby Default Starter',
+    title: 'SciFi - Cloudera Fast Forward Labs',
   },
+  pathPrefix: '/scifi',
   plugins: [
     `gatsby-plugin-styled-components`,
     'gatsby-plugin-react-helmet',

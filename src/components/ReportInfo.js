@@ -14,21 +14,16 @@ import {
   Relative,
   WhiteHighlight,
 } from '../utils/style.js'
+import ReportSlider from './ReportSlider.js'
 
 const AnimateReport = keyframes`
   from { background-position: 0 0; }
   to { background-position: -${lh_raw(8) * 5.155}rem 0; }
 `
 
-let ReportPreview = AbsStretch.extend`
-  background-size: auto calc(100% - ${lh(1)});
-  background-position: center 0;
-  background-color: #efefef;
-  background-repeat: repeat-x;
-  animation: ${AnimateReport} 8s linear infinite;
-`
-
 // let PreviewTrigger = styled.div`
+// animation: ${AnimateReport} 8s linear infinite;
+// animation-delay: 2s;
 //   &:hover ${ReportPreview} {
 //     animation: ${AnimateReport} 9s linear infinite;
 //     animation-play-state: play;
@@ -56,13 +51,8 @@ export default ({ frontmatter, fields }) => {
           {frontmatter.report_title}
         </Text>
       </div>
-      <WidthBreakout style={{ height: lh(8) }}>
-        <ReportPreview
-          style={{
-            height: lh(9),
-            backgroundImage: `url('${fields.report_strip.publicURL}')`,
-          }}
-        />
+      <WidthBreakout style={{ height: lh(9) }}>
+        <ReportSlider report_strip={fields.report_strip.publicURL} />
       </WidthBreakout>
       <Relative>
         <WhiteHighlight>
