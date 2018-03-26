@@ -84,8 +84,6 @@ exports.onCreateNode = ({ node, boundActionCreators, getNode }) => {
         reader.parse(node.frontmatter.report_sentence)
       )
     }
-    console.log(node.frontmatter.report_sentence)
-    console.log(report_sentence)
     createNodeField({
       node,
       name: `report_sentence`,

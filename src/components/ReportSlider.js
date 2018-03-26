@@ -7,6 +7,7 @@ let ReportPreview = AbsStretch.extend`
   background-position: 0 0;
   background-color: #efefef;
   background-repeat: repeat-x;
+  cursor: ew-resize;
 `
 
 export default class TemplateWrapper extends React.Component {
@@ -26,7 +27,7 @@ export default class TemplateWrapper extends React.Component {
           height: lh(10),
           backgroundImage: `url('${report_strip}')`,
           backgroundPosition: `${me.state.offset} 0`,
-          transition: 'background 0.01s linear'
+          transition: 'background 0.01s linear',
         }}
         onMouseMove={function(e) {
           let window_width = window.innerWidth
