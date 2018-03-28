@@ -1,5 +1,5 @@
 module.exports = {
-  // pathPrefix: '/scifi',
+  pathPrefix: '/scifi',
   siteMetadata: {
     title: 'SciFi - Cloudera Fast Forward Labs',
   },
@@ -24,11 +24,11 @@ module.exports = {
             resolve: 'gatsby-remark-images',
             options: {
               maxWidth: 650,
-              linkImagesToOriginal: false
-            }
-          }
-        ]
-      }
+              linkImagesToOriginal: false,
+            },
+          },
+        ],
+      },
     },
   ],
 }
