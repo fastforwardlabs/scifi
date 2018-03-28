@@ -3,7 +3,7 @@ path: "/ff04/mars-terraform-expansion-s-217"
 title: "Mars Terraform Expansion S-217"
 report: "ff04"
 report_title: "Summarization"
-preview_image: "./future_clusters.png"
+preview_image: "./ff04-scifi_clusters.svg"
 background: "#3277ba"
 author: 'Grant Custer'
 author_link: 'http://feed.grantcuster.com/'
@@ -41,9 +41,7 @@ appear larger, weighted by shares and recommendations across the social graph.
 The network web pulses as gravitational forces are adjusted to reflect shifts in
 public opinion.
 
-![test image](./future_clusters.png)
-
-##### The terraforming issue network influence graph.
+![test image](./ff04-scifi_clusters.svg)
 
 Fatima eyes the filter mechanism and directs it to show only sources she's read
 and recommended before. The display fades out the majority of the nodes, leaving
@@ -54,9 +52,7 @@ previously viewed. The summary indicates that one article, by a source she has
 found especially influential in the past, has been extremely controversial. She
 sends that piece to her e-paper. She'll read it in full over breakfast.
 
-![test image](./future_summary.png)
-
-##### A user-curated custom summary on the terraforming controversy.
+![test image](./ff04-scifi_summary.svg)
 
 Feeling like she has a reasonable handle on the issue, she zooms back out to the
 full graph, and switches to the trending view. It's dominated by two impassioned

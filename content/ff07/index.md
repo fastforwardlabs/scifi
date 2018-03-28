@@ -3,7 +3,7 @@ path: "/ff07/customers-who-havent-read-kafka-also-like"
 title: "Customers Who Haven’t Read Kafka Also Like"
 report: "ff07"
 report_title: "Semantic Recommendations"
-preview_image: "./kafka_screen.png"
+preview_image: "./ff07-scifi-01.svg"
 background: "#ed874f"
 author: "Kent Szlauderbach"
 author_link: "http://kentszlauderbach.com/"
@@ -11,7 +11,11 @@ prologue: 'inspired by Franz Kafka’s ["An Imperial Message"](http://home.nwcio
 report_sentence: 'In this report we show how to use deep learning techniques to overcome the weaknesses of traditional recommendation systems.'
 ---
 
-![](./kafka_screen.png)
+<div class="md_image full_width">
+
+![](./ff07-scifi-01.svg)
+
+</div>
 
 Given that Kafka’s famous parable, “An Imperial Message,” never
 happened, neither would this parable, as our model suggests, though they

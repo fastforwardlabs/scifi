@@ -2,6 +2,7 @@ import React from 'react'
 import styled, { keyframes } from 'styled-components'
 import {
   lh,
+  lh1,
   lh_raw,
   breakpoint,
   Container,
@@ -43,18 +44,31 @@ export default ({ frontmatter, fields }) => {
       <div>
         <Text italic>from the report</Text>
       </div>
-      <div>
+      <Relative style={{ zIndex: 3 }}>
         <Text bold>
           <Text allcaps color={frontmatter.background}>
             {frontmatter.report}:
           </Text>{' '}
           {frontmatter.report_title}
         </Text>
-      </div>
-      <WidthBreakout style={{ height: lh(9) }}>
-        <ReportSlider report_strip={fields.report_strip.publicURL} />
+      </Relative>
+      <WidthBreakout
+        style={{
+          height: lh(10),
+          padding: `0 0 0`,
+          marginBottom: `-${lh1}`,
+          marginTop: `-${lh1}`,
+          background: '#efefef',
+          borderTop: `solid ${lh1} #fff`,
+          zIndex: 2,
+        }}
+      >
+        <ReportSlider
+          frontmatter={frontmatter}
+          report_strip={fields.report_strip.publicURL}
+        />
       </WidthBreakout>
-      <Relative>
+      <Relative style={{ zIndex: 3 }}>
         <WhiteHighlight>
           <Text italic>
             {fields.report_sentence ? (

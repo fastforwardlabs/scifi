@@ -3,20 +3,52 @@ import Helmet from 'react-helmet'
 import styled from 'styled-components'
 import ReportInfo from '../components/ReportInfo.js'
 import Story from '../components/Story.js'
+import { withPrefix } from 'gatsby-link'
+import { domain } from '../utils/style.js'
 
 export default ({ data }) => {
   const markdownRemark = data.markdownRemark
   const { frontmatter, excerpt, fields, html } = markdownRemark
 
+  let title = `${frontmatter.title} - Cloudera Fast Forward Labs`
+  let description = excerpt
+
   return (
     <div>
       <Helmet
-        title={`${frontmatter.title} - Cloudera Fast Forward Labs`}
+        title={title}
         meta={[
           {
             name: 'description',
-            content:
-              excerpt,
+            content: description,
+          },
+          {
+            name: 'og:url',
+            content: domain + frontmatter.path,
+          },
+          {
+            name: 'og:title',
+            content: title,
+          },
+          {
+            name: 'og:description',
+            content: description,
+          },
+          {
+            name: 'og:image',
+            content: domain + frontmatter.preview_image.publicURL,
+          },
+          {
+            name: 'twitter:card',
+            content: 'summary_large_image',
+          },
+          {
+            name: 'twitter:title',
+            content: title,
+          },
+          {
+            name: 'twitter:description',
+            content: description,
           },
         ]}
       />
@@ -38,6 +70,9 @@ export const pageQuery = graphql`
         report_title
         author
         author_link
+        preview_image {
+          publicURL
+        }
       }
       excerpt
       fields {

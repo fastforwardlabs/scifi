@@ -1,15 +1,60 @@
 html {
-  /* background: #efefef; */
-  font-size: 20px;
+  font-size: 18px;
 }
 
-@media(max-width: 560px) {
+@media(min-width: 320px) {
   html {
-    font-size: 18px
+    /* background: #efefef; */
+    font-size: 20px;
+    line-height: 1.5;
+    font-size: calc(18px + (22 - 18) * (100vw - 320px) / (740 - 320));
   }
 }
 
+@media(min-width: 740px) {
+  html {
+    font-size: 22px;
+  }
+}
+
+/* @media(max-width: 560px) { */
+/*   html { */
+/*     font-size: 19px; */
+/*     /* line-height: 1.6; */ */
+/*   } */
+/* } */
+/*  */
+/* @media(max-width: 400px) { */
+/*   html { */
+/*     font-size: 18px; */
+/*     /* line-height: 1.6; */ */
+/*   } */
+/* } */
 
 code {
   background: transparent;
+}
+
+p {
+  margin-bottom: 1.5rem;
+}
+
+.md_image {
+  margin: 0 auto;
+}
+
+.md_image p {
+  margin: 0;
+}
+
+.md_image img {
+  margin-bottom: 1.5rem;
+}
+
+.md_image.full_width {
+  max-width: 620px;
+}
+
+.md_image.half_width {
+  max-width: 310px;
 }

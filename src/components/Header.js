@@ -9,7 +9,7 @@ import {
   Text,
   Container,
   LinkBlock,
-  Highlight,
+  HiddenHighlight,
   HighlightParentLink,
 } from '../utils/style.js'
 import logo from '../images/ff-logo-square.png'
@@ -26,6 +26,7 @@ let Logo = styled.div`
     right: ${lh(0.5)};
   }
 `
+
 let Cffl = (
   <div>
     <Logo />
@@ -57,9 +58,9 @@ let ReportPageMeta = (
   <HighlightParentLink to="/">
     {Cffl}
     <div>
-      {/* <Highlight> */}
-      <Text bold>SciFi</Text>
-      {/* </Highlight> */}
+      <HiddenHighlight>
+        <Text bold>SciFi</Text>
+      </HiddenHighlight>
     </div>
   </HighlightParentLink>
 )

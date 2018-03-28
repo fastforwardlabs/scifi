@@ -2,7 +2,9 @@ import styled from 'styled-components'
 import chroma from 'chroma-js'
 import Link from 'gatsby-link'
 
-export let line_height = 1.45
+export let domain = 'http://fastforwardlabs.github.io/scifi'
+
+export let line_height = 1.5
 
 export let lh = multiple => line_height * multiple + 'rem'
 export let lh_raw = multiple => line_height * multiple
@@ -53,7 +55,7 @@ export let Indent = styled.div`
 `
 
 export let WhiteHighlight = styled.span`
-  padding: 0.15em 0;
+  padding: 0.16em 0;
   background: #fff;
   box-shadow: -${lh(0.25)} 0 0 #fff, ${lh(0.25)} 0 0 #fff;
 `
@@ -72,7 +74,7 @@ export let Highlight = styled.span`
         .hex()
     }
     return `
-    padding: ${props.is_title ? `0` : `0.15em 0;`}
+    padding: ${props.is_title ? `0` : `0.16em 0;`}
     box-shadow: ${
       props.is_title
         ? `-${lh(0.5)} 0 0 ${highlight}, ${lh(0.5)} 0 0 ${highlight};`
@@ -221,11 +223,36 @@ export let LinkSpacer = styled.span`
   width: ${lh05};
 `
 
+export let HiddenHighlight = Highlight.extend`
+  background: transparent;
+  ${props =>
+    `box-shadow: ${
+      props.is_title
+        ? `-${lh(0.5)} 0 0 transparent, ${lh(0.5)} 0 0 transparent;`
+        : `-${lh(0.25)} 0 0 transparent, ${lh(0.25)} 0 0 transparent;`
+    };`};
+`
+
+export let BottomBorder = styled.div`
+  position: absolute;
+  left: ${lh(1)};
+  height: ${lh(3)};
+  right: 0;
+  bottom: ${lh(0.5)};
+  ${props => {
+    let light_bg = chroma(props.bg)
+      .brighten(0.5)
+      .hex()
+    return `background: ${light_bg};`
+  }};
+  transition: all 0.1s linear;
+`
+
 export let HighlightParentLink = styled(Link)`
   display: block;
   color: #222;
   text-decoration: none;
-  &:hover ${Highlight} {
+  &:hover ${Highlight}, &:hover ${HiddenHighlight} {
     ${props => {
       let bg
       if (props.bg) {
@@ -241,6 +268,9 @@ export let HighlightParentLink = styled(Link)`
       }
       background: ${bg};`
     }};
+  }
+  &:hover ${BottomBorder} {
+    ${props => `background: ${props.bg}`};
   }
   &:hover ${UnderlineInnerLink} {
     ${props => {
@@ -305,7 +335,7 @@ export let Topper = styled.div`
 export let Bottomer = Topper.extend`
   z-index: -1;
   margin-bottom: 0;
-  margin-top: -${lh(2)};
+  margin-top: -${lh(1)};
   &:after {
     top: auto;
     bottom: ${lh1};

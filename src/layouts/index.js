@@ -6,7 +6,7 @@ import { withPrefix } from 'gatsby-link'
 import Header from '../components/Header.js'
 import StoryLinks from '../components/StoryLinks.js'
 import About from '../components/About.js'
-import { lh1 } from '../utils/style.js'
+import { lh1, domain } from '../utils/style.js'
 
 import './fonts.css'
 import './index.css'
@@ -14,7 +14,7 @@ import './custom.css'
 
 let PageContainer = styled.div`
   font-family: 'ChambersSansWeb';
-  max-width: 680px;
+  max-width: 740px;
   margin: 0 auto;
   color: #222;
   position: relative;
@@ -47,22 +47,61 @@ export default class TemplateWrapper extends React.Component {
       })
     }
 
+    let title = 'SciFi - Cloudera Fast Forward Labs'
+    let description =
+      'A collection of short fiction inspired by new developments in machine learning. Each story takes its theme from the topic of the report it appears in.'
+
     return (
       <div>
         <Helmet
-          title="SciFi - Cloudera Fast Forward Labs"
+          title={description}
           meta={[
             {
               name: 'description',
-              content:
-                'A collection of short fiction inspired by new developments in machine learning. Each story takes its theme from the topic of the report it appears in.',
+              content: description,
+            },
+            {
+              name: 'og:url',
+              content: domain,
+            },
+            {
+              name: 'og:title',
+              content: title,
+            },
+            {
+              name: 'og:description',
+              content: description,
+            },
+            {
+              name: 'og:image',
+              content: domain + '/cffl-scifi.png',
+            },
+            {
+              name: 'twitter:card',
+              content: 'summary_large_image',
+            },
+            {
+              name: 'twitter:site',
+              content: '@fastforwardlabs',
+            },
+            {
+              name: 'twitter:creator',
+              content: '@fastforwardlabs',
+            },
+            {
+              name: 'twitter:title',
+              content: title,
+            },
+            {
+              name: 'twitter:description',
+              content: description,
             },
           ]}
           link={[
             {
               rel: 'shortcut icon',
               type: 'image/png',
-              href: '/favicon.png',
+              href: withPrefix('/favicon.png'),
             },
           ]}
         />
@@ -95,12 +134,7 @@ export const pageQuery = graphql`
             author
             author_link
             preview_image {
-              childImageSharp {
-                sizes(maxWidth: 800) {
-                  src
-                  srcSet
-                }
-              }
+              publicURL
             }
           }
           excerpt(pruneLength: 250)

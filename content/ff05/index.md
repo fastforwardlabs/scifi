@@ -3,7 +3,7 @@ path: "/ff05/bayeshead-5000"
 title: "BayesHead 5000"
 report: "ff05"
 report_title: "Probabilistic Programming"
-preview_image: "./monte_carlo.png"
+preview_image: "./ff05-scifi-02.svg"
 background: "#51ae75"
 author: "Liam Sweeney"
 author_link: "https://t.co/1ybyMuIsqv"
@@ -13,7 +13,7 @@ report_sentence: 'In this report we show how to use probabilistic programming to
 build products and tools for more effective decision making.'
 ---
 
-![](./monte_carlo.png)
+![](./ff05-scifi-01.svg)
 
 Re: Inquiry on Limitations of the BayesHead 5000
 

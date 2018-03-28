@@ -17,6 +17,7 @@ import {
   AbsStretch,
   Relative,
   WidthBreakout,
+  BottomBorder,
 } from '../utils/style.js'
 
 let desktop_height = lh(8)
@@ -51,23 +52,43 @@ let BookStretch = AbsStretch.extend`
   background-size: auto 100%;
   background-position: 0 0;
   background-color: #efefef;
+  animation: ${AnimateDown} 3.5s linear infinite;
+  animation-play-state: paused;
 `
 
 let PreviewStretch = AbsStretch.extend`
   background-size: auto 100%;
   background-position: right top;
   background-color: #fff;
-  clip-path: polygon(101% 0, 101% 100%, 0 100%, 0% 100%);
+  clip-path: polygon(101% 0, 101% 100%, 0 100%);
+  animation: ${AnimateUp} 3.5s linear infinite;
+  animation-play-state: paused;
+`
+
+const LinkIndicator = styled.div`
+  position: absolute;
+  bottom: 0;
+  color: #222;
+  font-weight: bold;
+  opacity: 0;
+  right: ${lh(1)}
+  transition: all 0.1s linear
 `
 
 const AnimateLink = HighlightParentLink.extend`
   min-height: ${lh(12)};
-  &:hover .disabled {
+  &:hover {
     ${BookStretch} {
       animation: ${AnimateDown} 3.5s linear infinite;
+      animation-play-state: play;
     }
     ${PreviewStretch} {
       animation: ${AnimateUp} 3.5s linear infinite;
+      animation-play-state: play;
+    }
+    ${LinkIndicator} {
+      right: ${lh(0.5)};
+      opacity: 1;
     }
   }
 `
@@ -80,6 +101,11 @@ export default ({ node }) => {
       bg={node.frontmatter.background}
     >
       <WidthBreakout>
+        <ImageHolder style={{ height: lh(10) }}>
+          <BottomBorder bg={node.frontmatter.background} style={{}} />
+        </ImageHolder>
+      </WidthBreakout>
+      <WidthBreakout>
         <ImageHolder>
           <BookStretch
             style={{
@@ -91,7 +117,7 @@ export default ({ node }) => {
           <PreviewStretch
             style={{
               backgroundImage: `url('${
-                node.frontmatter.preview_image.childImageSharp.sizes.src
+                node.frontmatter.preview_image.publicURL
               }')`,
             }}
           />
@@ -125,21 +151,32 @@ export default ({ node }) => {
           </div>
         ) : null}
       </TitleContainer>
-      <WidthBreakout>
-        <Relative style={{ maxHeight: lh(2), overflowY: 'hidden' }}>
+      <WidthBreakout style={{ zIndex: 3, position: 'relative' }}>
+        <Relative
+          style={{
+            maxHeight: lh(2),
+            overflowY: 'hidden',
+            paddingRight: lh(0.75),
+            paddingLeft: lh(1),
+          }}
+        >
           <Container style={{ paddingTop: 0 }}>
-            <Indent>
+            <div
+              style={{
+                background: '#fff',
+                boxShadow: `-${lh(0.25)} 0 0 #fff, ${lh(0.25)} 0 0 #fff`,
+              }}
+            >
               <WhiteHighlight>
                 <Text italic>{node.excerpt}</Text>
               </WhiteHighlight>
-            </Indent>
+            </div>
           </Container>
         </Relative>
+        <LinkIndicator>→</LinkIndicator>
       </WidthBreakout>
-      <Relative style={{ textAlign: 'right' }}>
-        <UnderlineInnerLink bg={node.frontmatter.background}>
-          <Text italic>...read story</Text>
-        </UnderlineInnerLink>
+      <Relative style={{ zIndex: 2 }}>
+        <WidthBreakout />
       </Relative>
     </AnimateLink>
   )

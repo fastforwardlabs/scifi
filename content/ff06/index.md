@@ -3,7 +3,7 @@ path: "/ff06/the-definition-of-success"
 title: "The Definition of Success"
 report: "ff06"
 report_title: "Interpretability"
-preview_image: "./5_10.png"
+preview_image: "./ff06-scifi-01.svg"
 background: "#eb6e62"
 author: 'Grant Custer'
 author_link: 'http://feed.grantcuster.com/'
@@ -20,7 +20,12 @@ The crew awoke to Ship’s message:
 `PLANET OF INTEREST APPROACHING — ESTIMATED ARRIVAL FOUR HOURS — BEGIN
 PREPARATION FOR ON-PLANET EXPLORATION.`
 
-![Woken from hibernation.](./5_07.png)
+
+<div class="md_image half_width">
+
+![Woken from hibernation.](./ff06-scifi-01.svg)
+
+</div>
 
 Rue glanced at the monitor — they’d been out for seven months this time.
 
@@ -38,7 +43,11 @@ each about a meter tall, with a covering that looked like a cross
 between leather and metal. They seemed to pulse slightly. A low humming
 suffused the cave.
 
-![Taera in the cave.](./5_08.png)
+<div class="md_image half_width">
+
+![Taera in the cave.](./ff06-scifi-02.svg)
+
+</div>
 
 "This one’s giving off significant heat," Taera said, as she approached
 the nearest one.
@@ -84,7 +93,11 @@ of the crew.
 "That’s just a number and we both know it, Ship. Show me the success
 predictions for your last five missions."
 
-![Mission success predictions.](./5_09.png)
+<div class="md_image half_width">
+
+![Mission success predictions.](./ff06-scifi-03.svg)
+
+</div>
 
 A table was projected on the wall facing Rue. The missions had success
 predictions ranging from 98% to 13%.
@@ -113,7 +126,11 @@ driving the success predictions lower for those missions.
 feature in your mission success prediction, isn’t it? Add that column to
 the table."
 
-![Feature importance for mission success predictions.](./5_10.png)
+<div class="md_image full_width">
+
+![Feature importance for mission success predictions.](./ff06-scifi-04.svg)
+
+</div>
 
 A column titled "Crew Survival" was added to the table. The values
 varied between 88% and 12%, and none of them were highlighted as
@@ -138,8 +155,12 @@ power an alarm started, and Ship’s voice returned with a new sense of
 urgency. The adjusted feature importances and success prediction for the
 current mission appeared on the wall.
 
+<div class="md_image half_width">
+
 ![The recalculated success prediction and a recommendation for
-action.](./5_11.png)
+action.](./ff06-scifi-05.svg)
+
+</div>
 
 `ALERT! ALERT! CREW IS IN GRAVE DANGER. RECOMMENDATION: PROCEED TO
 ESCAPE POD IMMEDIATELY. INITIATE SHIP SELF-DESTRUCT SEQUENCE TO DESTROY
