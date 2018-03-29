@@ -6,7 +6,7 @@ report_title: "Summarization"
 preview_image: "./ff04-scifi_clusters.svg"
 background: "#3277ba"
 author: 'Grant Custer'
-author_link: 'http://feed.grantcuster.com/'
+author_link: 'https://twitter.com/GrantCuster'
 report_sentence: 'In this report we show how summarization, and algorithms that
 make text quantifiable, can unlock the value of unstructured text data.'
 ---
@@ -41,7 +41,9 @@ appear larger, weighted by shares and recommendations across the social graph.
 The network web pulses as gravitational forces are adjusted to reflect shifts in
 public opinion.
 
-![test image](./ff04-scifi_clusters.svg)
+![A network graph representation of different opinions on the Mars Terraform
+Expansion. Eco-conservative views are towards the left and expansionists toward
+the right.](./ff04-scifi_clusters.svg)
 
 Fatima eyes the filter mechanism and directs it to show only sources she's read
 and recommended before. The display fades out the majority of the nodes, leaving
@@ -52,7 +54,9 @@ previously viewed. The summary indicates that one article, by a source she has
 found especially influential in the past, has been extremely controversial. She
 sends that piece to her e-paper. She'll read it in full over breakfast.
 
-![test image](./ff04-scifi_summary.svg)
+![A personalized summary of the debate surrounding terraform expansion. Nodes
+from the network graph are on the left. An informal summary is on the right,
+with different positions highlighted according to their political orientation.](./ff04-scifi_summary.svg)
 
 Feeling like she has a reasonable handle on the issue, she zooms back out to the
 full graph, and switches to the trending view. It's dominated by two impassioned

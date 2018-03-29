@@ -13,7 +13,8 @@ report_sentence: 'In this report we show how to use probabilistic programming to
 build products and tools for more effective decision making.'
 ---
 
-![](./ff05-scifi-01.svg)
+![Letterhead for Monte Carlo Inc., Customer Assistance Office. Their logo is a
+pair of dice with the dots spelling an 'M' and a 'C'.](./ff05-scifi-01.svg)
 
 Re: Inquiry on Limitations of the BayesHead 5000
 

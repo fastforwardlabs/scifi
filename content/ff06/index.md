@@ -6,7 +6,7 @@ report_title: "Interpretability"
 preview_image: "./ff06-scifi-01.svg"
 background: "#eb6e62"
 author: 'Grant Custer'
-author_link: 'http://feed.grantcuster.com/'
+author_link: 'https://twitter.com/GrantCuster'
 prologue: "inspired by Ridley Scott's
 [Alien](https://en.wikipedia.org/wiki/Alien_(film))"
 report_sentence: 'In this report we show how to make deep learning models
@@ -23,7 +23,8 @@ PREPARATION FOR ON-PLANET EXPLORATION.`
 
 <div class="md_image half_width">
 
-![Woken from hibernation.](./ff06-scifi-01.svg)
+![A woman opens her hibernation pod. A display above her reads "Hibernation
+time: 7 months".](./ff06-scifi-01.svg)
 
 </div>
 
@@ -45,7 +46,7 @@ suffused the cave.
 
 <div class="md_image half_width">
 
-![Taera in the cave.](./ff06-scifi-02.svg)
+![A person in full astronaut gear is surrounded by large eggs.](./ff06-scifi-02.svg)
 
 </div>
 
@@ -95,7 +96,8 @@ predictions for your last five missions."
 
 <div class="md_image half_width">
 
-![Mission success predictions.](./ff06-scifi-03.svg)
+![A list of mission success predictions. The current mission success prediction
+is 95%.](./ff06-scifi-03.svg)
 
 </div>
 
@@ -128,7 +130,9 @@ the table."
 
 <div class="md_image full_width">
 
-![Feature importance for mission success predictions.](./ff06-scifi-04.svg)
+![The missions success predictions with indicators of the factors that played
+the largest role in the predictions. It shows the main factor driving the
+prediction for mission success is a high potential profit.](./ff06-scifi-04.svg)
 
 </div>
 
@@ -157,8 +161,10 @@ current mission appeared on the wall.
 
 <div class="md_image half_width">
 
-![The recalculated success prediction and a recommendation for
-action.](./ff06-scifi-05.svg)
+![The recalculated success prediction. Crew survival, rated at 14% likelihood,
+is now the most important feature driving the success prediction. The new
+success prediction is 25%. The system recommends the crew go to the escape pods
+immediately.](./ff06-scifi-05.svg)
 
 </div>
 

@@ -11,6 +11,7 @@ import {
   LinkBlock,
   HiddenHighlight,
   HighlightParentLink,
+  BareH1,
 } from '../utils/style.js'
 import logo from '../images/ff-logo-square.png'
 
@@ -40,9 +41,11 @@ let IndexPageMeta = (
   <div>
     {Cffl}
     <div>
-      <Text bold fsm={3}>
-        SciFi
-      </Text>
+      <BareH1>
+        <Text bold fsm={3}>
+          SciFi
+        </Text>
+      </BareH1>
     </div>
     <div>
       <Text>

@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import chroma from 'chroma-js'
 import Link from 'gatsby-link'
 
-export let domain = 'http://fastforwardlabs.github.io/scifi'
+export let domain = 'http://scifi.fastforwardlabs.com'
 
 export let line_height = 1.5
 
@@ -235,9 +235,9 @@ export let HiddenHighlight = Highlight.extend`
 
 export let BottomBorder = styled.div`
   position: absolute;
-  left: ${lh(1)};
-  height: ${lh(3)};
-  right: 0;
+  left: ${lh(0.25)};
+  height: ${lh(2)};
+  right: -${lh(1)};
   bottom: ${lh(0.5)};
   ${props => {
     let light_bg = chroma(props.bg)
@@ -246,6 +246,10 @@ export let BottomBorder = styled.div`
     return `background: ${light_bg};`
   }};
   transition: all 0.1s linear;
+  ${breakpoint} {
+    left: -${lh(0.5)};
+    right: -${lh(0.5)};
+  }
 `
 
 export let HighlightParentLink = styled(Link)`
@@ -343,5 +347,21 @@ export let Bottomer = Topper.extend`
 `
 
 export let Seravek = styled.div`
-  font-family: 'SeravekWebBasic';
+  font-family: 'SeravekWebBasic', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+`
+
+export let BareH1 = styled.h1`
+  margin: 0;
+  padding: 0;
+  font-size: inherit;
+  line-height: inherit;
+  font-famiy: inherit;
+`
+export let BareH2 = styled.h2`
+  margin: 0;
+  padding: 0;
+  font-size: inherit;
+  line-height: inherit;
+  font-famiy: inherit;
 `

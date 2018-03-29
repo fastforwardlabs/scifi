@@ -23,7 +23,14 @@ import {
   ExternalUnderlineLink,
   UnderlineLinkContainer,
   Seravek,
+  BareH1,
 } from '../utils/style.js'
+
+const NoParagraph = styled.div`
+  p {
+    margin: 0;
+  }
+`
 
 export default ({ frontmatter, fields, html }) => {
   return (
@@ -33,37 +40,45 @@ export default ({ frontmatter, fields, html }) => {
       </WidthBreakout>
       <Relative>
         <div>
-          <Text bold fsm={2}>
-            {frontmatter.title}
-          </Text>
-        </div>
-        {frontmatter.author ? (
-          <Indent>
-            <Text italic>
-              by{' '}
-              <Text bold>
-                {frontmatter.author_link ? (
-                  <ExternalUnderlineLink
-                    bg={frontmatter.background}
-                    href={frontmatter.author_link}
-                  >
-                    {frontmatter.author}
-                  </ExternalUnderlineLink>
-                ) : (
-                  frontmatter.author
-                )}
-              </Text>
+          <BareH1>
+            <Text bold fsm={2}>
+              {frontmatter.title}
             </Text>
-          </Indent>
-        ) : null}
-        {fields.prologue ? (
-          <Indent>
-            <UnderlineLinkContainer
-              bg={frontmatter.background}
-              style={{ fontStyle: 'italic' }}
-              dangerouslySetInnerHTML={{ __html: fields.prologue }}
-            />
-          </Indent>
+          </BareH1>
+        </div>
+        {frontmatter.author || fields.prologue ? (
+          <div style={{ marginBottom: lh1 }}>
+            {frontmatter.author ? (
+              <Indent>
+                <Text italic>
+                  by{' '}
+                  <Text bold>
+                    {frontmatter.author_link ? (
+                      <ExternalUnderlineLink
+                        bg={frontmatter.background}
+                        href={frontmatter.author_link}
+                      >
+                        {frontmatter.author}
+                      </ExternalUnderlineLink>
+                    ) : (
+                      frontmatter.author
+                    )}
+                  </Text>
+                </Text>
+              </Indent>
+            ) : null}
+            {fields.prologue ? (
+              <Indent>
+                <NoParagraph>
+                  <UnderlineLinkContainer
+                    bg={frontmatter.background}
+                    style={{ fontStyle: 'italic' }}
+                    dangerouslySetInnerHTML={{ __html: fields.prologue }}
+                  />
+                </NoParagraph>
+              </Indent>
+            ) : null}
+          </div>
         ) : null}
       </Relative>
       <Relative>

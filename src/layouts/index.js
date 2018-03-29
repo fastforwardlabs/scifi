@@ -13,7 +13,7 @@ import './index.css'
 import './custom.css'
 
 let PageContainer = styled.div`
-  font-family: 'ChambersSansWeb';
+  font-family: 'ChambersSansWeb',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
   max-width: 740px;
   margin: 0 auto;
   color: #222;
@@ -54,7 +54,7 @@ export default class TemplateWrapper extends React.Component {
     return (
       <div>
         <Helmet
-          title={description}
+          title={title}
           meta={[
             {
               name: 'description',

@@ -20,8 +20,12 @@ import {
   BottomBorder,
 } from '../utils/style.js'
 
-let desktop_height = lh(8)
-let mobile_height = lh(8)
+let desktop_num = 8
+let mobile_num = 10
+let desktop_height = lh(desktop_num)
+let mobile_height = lh(mobile_num)
+let desktop_ih = lh(desktop_num - 2)
+let mobile_ih = lh(mobile_num - 2)
 
 let TitleContainer = styled.div`
   height: ${desktop_height};
@@ -73,10 +77,15 @@ const LinkIndicator = styled.div`
   opacity: 0;
   right: ${lh(1)}
   transition: all 0.1s linear
+  ${breakpoint} {
+    opacity: 1;
+    right: ${lh(0.375)};
+  }
 `
 
 const AnimateLink = HighlightParentLink.extend`
-  min-height: ${lh(12)};
+  position: relative;
+  padding-bottom: ${lh1};
   &:hover {
     ${BookStretch} {
       animation: ${AnimateDown} 3.5s linear infinite;
@@ -91,6 +100,36 @@ const AnimateLink = HighlightParentLink.extend`
       opacity: 1;
     }
   }
+  ${breakpoint} {
+    &:hover {
+      ${BookStretch} {
+        animation: none;
+      }
+      ${PreviewStretch} {
+        animation: none;
+      }
+      ${LinkIndicator} {
+        right: ${lh(0.375)};
+      }
+    }
+  }
+`
+const ExcerptHolder = Relative.extend`
+  max-height: ${lh(2)};
+  overflow-y: hidden;
+  padding-right: ${lh(0.75)};
+  padding-left: ${lh(1)};
+  ${breakpoint} {
+    padding-left: 0;
+    padding-right: ${lh(1)};
+  }y
+`
+
+const Truncate = styled.div`
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `
 
 export default ({ node }) => {
@@ -100,11 +139,7 @@ export default ({ node }) => {
       is_title
       bg={node.frontmatter.background}
     >
-      <WidthBreakout>
-        <ImageHolder style={{ height: lh(10) }}>
-          <BottomBorder bg={node.frontmatter.background} style={{}} />
-        </ImageHolder>
-      </WidthBreakout>
+      <BottomBorder bg={node.frontmatter.background} />
       <WidthBreakout>
         <ImageHolder>
           <BookStretch
@@ -123,13 +158,13 @@ export default ({ node }) => {
           />
         </ImageHolder>
       </WidthBreakout>
-      <div>
+      <Truncate>
         <Text italic>from</Text>{' '}
         <Text allcaps color={node.frontmatter.background} bold>
           {node.frontmatter.report}:
         </Text>{' '}
         <Text bold>{node.frontmatter.report_title}</Text>
-      </div>
+      </Truncate>
       <TitleContainer>
         <div style={{ position: 'relative', zIndex: 3 }}>
           <Text bold fsm={2}>
@@ -152,14 +187,7 @@ export default ({ node }) => {
         ) : null}
       </TitleContainer>
       <WidthBreakout style={{ zIndex: 3, position: 'relative' }}>
-        <Relative
-          style={{
-            maxHeight: lh(2),
-            overflowY: 'hidden',
-            paddingRight: lh(0.75),
-            paddingLeft: lh(1),
-          }}
-        >
+        <ExcerptHolder style={{}}>
           <Container style={{ paddingTop: 0 }}>
             <div
               style={{
@@ -172,7 +200,7 @@ export default ({ node }) => {
               </WhiteHighlight>
             </div>
           </Container>
-        </Relative>
+        </ExcerptHolder>
         <LinkIndicator>→</LinkIndicator>
       </WidthBreakout>
       <Relative style={{ zIndex: 2 }}>

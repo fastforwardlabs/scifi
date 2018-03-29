@@ -13,7 +13,8 @@ report_sentence: 'In this report we show how to use deep learning techniques to 
 
 <div class="md_image full_width">
 
-![](./ff07-scifi-01.svg)
+![A computer in a high-rise office buildings. Two plants surround the computer.
+Its screen reads "Customers Who Haven't Read Kafka Also Like".](./ff07-scifi-01.svg)
 
 </div>
 
