@@ -1,5 +1,5 @@
 module.exports = {
-  pathPrefix: '/scifi',
+  // pathPrefix: '/scifi',
   siteMetadata: {
     title: 'SciFi - Cloudera Fast Forward Labs',
   },
