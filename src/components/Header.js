@@ -45,7 +45,7 @@ let IndexPageMeta = (
       </Text>
     </div>
     <div>
-      <Text italic>
+      <Text>
         A collection of short fiction inspired by new developments in machine
         learning. Each story takes its theme from the topic of the report it
         appears in.

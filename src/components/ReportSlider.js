@@ -92,6 +92,7 @@ export default class TemplateWrapper extends React.Component {
           onTouchStart={e => {
             let mobile_start = e.targetTouches[0].pageX
             this.setState({ mobile_start: mobile_start, scroll_active: true })
+            e.preventDefault()
           }}
           onTouchMove={e => {
             let panned = -(me.state.mobile_start - e.targetTouches[0].pageX)
@@ -110,12 +111,14 @@ export default class TemplateWrapper extends React.Component {
               -new_offset / max_offset * (current_width - scroller_width) +
               scroller_width / 2
             this.setState({ offset: new_offset, scroller: scroll_scale })
+            e.preventDefault()
           }}
           onTouchEnd={e => {
             this.setState({
               mobile_offset: me.state.offset,
               scroll_active: false,
             })
+            e.preventDefault()
           }}
           onMouseEnter={function() {
             me.setState({ scroll_active: true })
