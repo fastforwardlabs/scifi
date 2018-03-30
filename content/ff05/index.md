@@ -6,7 +6,7 @@ report_title: "Probabilistic Programming"
 preview_image: "./ff05-scifi-02.svg"
 background: "#51ae75"
 author: "Liam Sweeney"
-author_link: "https://t.co/1ybyMuIsqv"
+author_link: "http://www.sr.ithaka.org/people/liam-sweeney/"
 prologue: 'inspired by George Saunder’s ["I Can
 Speak"](http://www.newyorker.com/magazine/1999/06/21/i-can-speak)'
 report_sentence: 'In this report we show how to use probabilistic programming to

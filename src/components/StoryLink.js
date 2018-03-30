@@ -58,15 +58,17 @@ let BookStretch = AbsStretch.extend`
   background-color: #efefef;
   animation: ${AnimateDown} 3.5s linear infinite;
   animation-play-state: paused;
+  animation: none;
 `
 
 let PreviewStretch = AbsStretch.extend`
   background-size: auto 100%;
-  background-position: right top;
+  background-position: 0 0;
   background-color: #fff;
   clip-path: polygon(101% 0, 101% 100%, 0 100%);
   animation: ${AnimateUp} 3.5s linear infinite;
   animation-play-state: paused;
+  animation: none;
 `
 
 const LinkIndicator = styled.div`
@@ -85,22 +87,33 @@ const LinkIndicator = styled.div`
 
 const AnimateLink = HighlightParentLink.extend`
   position: relative;
-  padding-bottom: ${lh1};
+  margin: 0 -${lh1} ${lh1};
+  padding: 0 ${lh1} ${lh(0.5)};
   &:hover {
     ${BookStretch} {
       animation: ${AnimateDown} 3.5s linear infinite;
       animation-play-state: play;
+      animation: none;
     }
     ${PreviewStretch} {
       animation: ${AnimateUp} 3.5s linear infinite;
       animation-play-state: play;
+      animation: none;
     }
     ${LinkIndicator} {
       right: ${lh(0.5)};
       opacity: 1;
     }
+    ${BookStretch} {
+      animation: none;
+    }
+    ${PreviewStretch} {
+      animation: none;
+    }
   }
   ${breakpoint} {
+    margin: 0;
+    padding: 0 0 ${lh(0.5)};
     &:hover {
       ${BookStretch} {
         animation: none;
@@ -132,80 +145,150 @@ const Truncate = styled.div`
   text-overflow: ellipsis;
 `
 
-export default ({ node }) => {
-  return (
-    <AnimateLink
-      to={node.frontmatter.path}
-      is_title
-      bg={node.frontmatter.background}
-    >
-      <BottomBorder bg={node.frontmatter.background} />
-      <WidthBreakout>
-        <ImageHolder>
-          <BookStretch
-            style={{
-              backgroundImage: `url('${
-                node.fields.report_image.childImageSharp.sizes.src
-              }')`,
-            }}
-          />
-          <PreviewStretch
-            style={{
-              backgroundImage: `url('${
-                node.frontmatter.preview_image.publicURL
-              }')`,
-            }}
-          />
-        </ImageHolder>
-      </WidthBreakout>
-      <Truncate>
-        <Text italic>from</Text>{' '}
-        <Text allcaps color={node.frontmatter.background} bold>
-          {node.frontmatter.report}:
-        </Text>{' '}
-        <Text bold>{node.frontmatter.report_title}</Text>
-      </Truncate>
-      <TitleContainer>
-        <div style={{ position: 'relative', zIndex: 3 }}>
-          <Text bold fsm={2}>
-            <Highlight is_title bg={node.frontmatter.background}>
-              {node.frontmatter.title}
-            </Highlight>
-          </Text>
-        </div>
-        {node.frontmatter.author ? (
-          <div style={{ position: 'relative', zIndex: 1 }}>
-            <Indent>
-              <WhiteHighlight>
-                by{' '}
-                <Text bold italic>
-                  {node.frontmatter.author}
-                </Text>
-              </WhiteHighlight>
-            </Indent>
-          </div>
-        ) : null}
-      </TitleContainer>
-      <WidthBreakout style={{ zIndex: 3, position: 'relative' }}>
-        <ExcerptHolder style={{}}>
-          <Container style={{ paddingTop: 0 }}>
-            <div
+function findAncestor(el, cls) {
+  while ((el = el.parentElement) && !el.classList.contains(cls));
+  return el
+}
+
+let delta_multiplier = 1.5
+
+export default class TemplateWrapper extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      mouse_active: false,
+      offset_x: 0,
+      offset_y: 0,
+      ref_x: 0,
+      ref_y: 0,
+      temp_x: 0,
+      temp_y: 0,
+    }
+  }
+  render() {
+    let me = this
+    let node = this.props.node
+    let new_offset_x =
+      (me.state.temp_x - me.state.ref_x) * delta_multiplier + me.state.offset_x
+    let new_offset_y =
+      (me.state.temp_y - me.state.ref_y) * delta_multiplier + me.state.offset_y
+    return (
+      <AnimateLink
+        to={node.frontmatter.path}
+        is_title
+        bg={node.frontmatter.background}
+        className="story-link"
+        onMouseEnter={function(e) {
+          var x = e.clientX
+          var y = e.clientY
+          me.setState({
+            mouse_active: true,
+            ref_x: x,
+            ref_y: y,
+            temp_x: x,
+            temp_y: y,
+          })
+        }}
+        onMouseMove={function(e) {
+          var x = e.clientX
+          var y = e.clientY
+          if (me.state.mouse_active) {
+            me.setState({
+              temp_x: x,
+              temp_y: y,
+            })
+          } else {
+            me.setState({
+              mouse_active: true,
+              ref_x: x,
+              ref_y: y,
+              temp_x: x,
+              temp_y: y,
+            })
+          }
+        }}
+        onMouseLeave={function(e) {
+          me.setState({
+            mouse_active: false,
+            ref_x: 0,
+            ref_y: 0,
+            temp_x: 0,
+            temp_y: 0,
+            offset_x: new_offset_x,
+            offset_y: new_offset_y,
+          })
+        }}
+      >
+        <BottomBorder bg={node.frontmatter.background} />
+        <WidthBreakout>
+          <ImageHolder>
+            <BookStretch
               style={{
-                background: '#fff',
-                boxShadow: `-${lh(0.25)} 0 0 #fff, ${lh(0.25)} 0 0 #fff`,
+                backgroundImage: `url('${
+                  node.fields.report_image.childImageSharp.sizes.src
+                }')`,
+                backgroundPosition: `${-new_offset_x}px ${-new_offset_y}px`,
               }}
-            >
-              <WhiteHighlight>
-                <Text italic>{node.excerpt}</Text>
-              </WhiteHighlight>
+            />
+            <PreviewStretch
+              style={{
+                backgroundImage: `url('${
+                  node.frontmatter.preview_image.publicURL
+                }')`,
+                backgroundPosition: `${-new_offset_x}px ${-new_offset_y}px`,
+              }}
+            />
+          </ImageHolder>
+        </WidthBreakout>
+        <Truncate>
+          <Text italic>from</Text>{' '}
+          <Text allcaps color={node.frontmatter.background} bold>
+            {node.frontmatter.report}:
+          </Text>{' '}
+          <Text bold>{node.frontmatter.report_title}</Text>
+        </Truncate>
+        <TitleContainer>
+          <div style={{ position: 'relative', zIndex: 3 }}>
+            <Text bold fsm={2}>
+              <Highlight is_title bg={node.frontmatter.background}>
+                {node.frontmatter.title}
+              </Highlight>
+            </Text>
+          </div>
+          {node.frontmatter.author ? (
+            <div style={{ position: 'relative', zIndex: 1 }}>
+              <Indent>
+                <WhiteHighlight>
+                  by{' '}
+                  <Text bold italic>
+                    {node.frontmatter.author}
+                  </Text>
+                </WhiteHighlight>
+              </Indent>
             </div>
-          </Container>
-        </ExcerptHolder>
-        <LinkIndicator>→</LinkIndicator>
-      </WidthBreakout>
-      <Relative style={{ zIndex: 2 }}>
-        <WidthBreakout />
-      </Relative>
-    </AnimateLink>
-  )
+          ) : null}
+        </TitleContainer>
+        <WidthBreakout style={{ zIndex: 3, position: 'relative' }}>
+          <ExcerptHolder style={{}}>
+            <Container style={{ paddingTop: 0 }}>
+              <div
+                style={{
+                  background: '#fff',
+                  boxShadow: `-${lh(0.25)} 0 0 #fff, ${lh(0.25)} 0 0 #fff`,
+                }}
+              >
+                <WhiteHighlight>
+                  <Text italic>{node.excerpt}</Text>
+                </WhiteHighlight>
+              </div>
+            </Container>
+          </ExcerptHolder>
+          <LinkIndicator>→</LinkIndicator>
+        </WidthBreakout>
+        <Relative style={{ zIndex: 2 }}>
+          <WidthBreakout />
+        </Relative>
+      </AnimateLink>
+    )
+  }
 }
