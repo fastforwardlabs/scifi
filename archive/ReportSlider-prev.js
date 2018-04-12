@@ -104,10 +104,6 @@ export let UnderlineInnerLink = styled.span`
   }};
 `
 
-export let HiddenUnderlineInnerLink = UnderlineInnerLink.extend`
-  background-image: linear-gradient(transparent, transparent);
-`
-
 export let UnderlineLink = styled(Link)`
   ${props => {
     let light_bg, bg
@@ -280,7 +276,7 @@ export let HighlightParentLink = styled(Link)`
   &:hover ${BottomBorder} {
     ${props => `background: ${props.bg}`};
   }
-  &:hover ${UnderlineInnerLink}, &:hover ${HiddenUnderlineInnerLink} {
+  &:hover ${UnderlineInnerLink} {
     ${props => {
       let bg
       if (props.bg) {
@@ -369,3 +365,109 @@ export let BareH2 = styled.h2`
   line-height: inherit;
   font-famiy: inherit;
 `
+
+let max_offset = strip_width - current_width
+let max_delta = current_width
+let delta_percent
+let delta_rescaled
+if (delta > 0) {
+  delta_percent = delta / (current_width - ref_x_offset)
+  delta_rescaled = delta_percent * (max_offset - me.state.offset_x)
+} else {
+  delta_percent = delta / ref_x_offset
+  delta_rescaled = delta_percent * me.state.offset_x
+}
+let new_offset_x = me.state.offset_x + delta_rescaled
+let offset_percent = new_offset_x / max_offset
+if (offset_percent < 0.05) {
+  new_offset_x = 0
+  if (delta < 0) {
+    me.setState({
+      ref_x: x,
+      display_x: new_offset_x,
+      offset_x: new_offset_x,
+    })
+  } else {
+    me.setState({
+      display_x: new_offset_x,
+    })
+  }
+} else if (offset_percent > 0.95) {
+  new_offset_x = max_offset
+  if (delta > 0) {
+    me.setState({
+      ref_x: x,
+      display_x: new_offset_x,
+      offset_x: new_offset_x,
+    })
+  } else {
+    me.setState({
+      display_x: new_offset_x,
+    })
+  }
+} else {
+  let rescale_again = (offset_percent - 0.05) / 0.9
+  console.log(rescale_again)
+  new_offset_x = rescale_again * max_offset
+  me.setState({
+    display_x: new_offset_x,
+  })
+}
+
+onMouseMove = {
+  function(e) {
+    var x = e.clientX
+    let ref_x_element = me.state.ref_x - width_offset
+    let strip_aspect = 5.3125
+    let font_size = getFontSize(window_width)
+    let strip_width = lh_raw(8) * font_size * strip_aspect
+    let snap_zone = 40
+    let delta = x - me.state.ref_x
+    console.log(delta)
+    if (delta > 0) {
+      let domain = current_width - ref_x_element
+      let delta_percent = delta / domain
+      let range = strip_width + me.state.offset_x - current_width
+      let new_offset = delta_percent * range - me.state.offset_x
+      let unit = domain / range
+      if (new_offset > range - snap_zone - me.state.offset_x) {
+        new_offset = strip_width - current_width
+      } else if (new_offset < snap_zone) {
+        new_offset = -me.state.offset_x
+      } else {
+        // let domain_start = unit * snap_zone
+        // let domain_end = domain - unit * snap_zone
+        // let new_domain = domain_end - domain_start
+        // let adj_delta_percent = (delta - domain_start) / new_domain
+        // new_offset = adj_delta_percent * range - me.state.offset_x
+      }
+      me.setState({
+        display_x: -new_offset,
+      })
+    } else {
+      let domain = ref_x_element
+      let delta_percent = 1 + delta / ref_x_element
+      let range = -me.state.offset_x
+      let new_offset = delta_percent * range
+      let unit = domain / range
+      me.setState({
+        start_ref: unit * snap_zone,
+      })
+      if (new_offset > range - snap_zone) {
+        new_offset = -me.state.offset_x
+      } else if (new_offset < snap_zone) {
+        new_offset = 0
+      } else {
+        // console.log('neg else')
+        // let domain_start = unit * snap_zone
+        // let domain_end = domain - unit * snap_zone
+        // let new_domain = domain_end - domain_start
+        // let adj_delta_percent = 1 + (delta + domain_start) / new_domain
+        // new_offset = adj_delta_percent * range
+      }
+      me.setState({
+        display_x: -new_offset,
+      })
+    }
+  },
+}

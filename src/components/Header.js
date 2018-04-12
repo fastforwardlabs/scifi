@@ -11,6 +11,8 @@ import {
   LinkBlock,
   HiddenHighlight,
   HighlightParentLink,
+  UnderlineInnerLink,
+  HiddenUnderlineInnerLink,
   BareH1,
 } from '../utils/style.js'
 import logo from '../images/ff-logo-square.png'
@@ -61,9 +63,9 @@ let ReportPageMeta = (
   <HighlightParentLink to="/">
     {Cffl}
     <div>
-      <HiddenHighlight>
+      <UnderlineInnerLink bg="#00dcec">
         <Text bold>SciFi</Text>
-      </HiddenHighlight>
+      </UnderlineInnerLink>
     </div>
   </HighlightParentLink>
 )

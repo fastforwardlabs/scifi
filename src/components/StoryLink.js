@@ -112,7 +112,7 @@ const AnimateLink = HighlightParentLink.extend`
     }
   }
   ${breakpoint} {
-    margin: 0;
+    margin: 0 0 ${lh1};
     padding: 0 0 ${lh(0.5)};
     &:hover {
       ${BookStretch} {
@@ -150,7 +150,7 @@ function findAncestor(el, cls) {
   return el
 }
 
-let delta_multiplier = 1.5
+let delta_multiplier = 1.25
 
 export default class TemplateWrapper extends React.Component {
   constructor() {
