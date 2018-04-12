@@ -96,6 +96,10 @@ export default class TemplateWrapper extends React.Component {
               name: 'twitter:description',
               content: description,
             },
+            {
+              name: 'twitter:image',
+              content: domain + '/cffl-scifi.png',
+            },
           ]}
           link={[
             {

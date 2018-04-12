@@ -54,6 +54,10 @@ export default ({ data }) => {
             name: 'twitter:description',
             content: description,
           },
+          {
+            name: 'twitter:image',
+            content: image_preview,
+          },
         ]}
       />
       <ReportInfo frontmatter={frontmatter} fields={fields} />
