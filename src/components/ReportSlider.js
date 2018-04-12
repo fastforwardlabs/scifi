@@ -1,83 +1,60 @@
 import React from 'react'
-import styled, { keyframes } from 'styled-components'
 import { lh, lh_raw, lh1, Relative, AbsStretch } from '../utils/style.js'
 
-let ReportMarker = styled.div`
-  position: absolute;
-  left: ${lh(0.25)};
-  top: -${lh1};
-  width: ${lh(0.5)};
-  height: ${lh1};
-  margin-left: -${lh(0.25)};
-  z-index: 9;
-  opacity: 0;
-  transition: opacity 0.2s linear;
-`
-
-function getFontSize(window_width) {
-  let font_size = 22
-  if (window_width < 320) {
-    font_size = 18
-  } else if (window_width < 740) {
-    font_size = 18 + (22 - 18) * (window_width - 320) / (740 - 320)
-  }
-  return font_size
-}
-
-let delta_multiplier = 1
-
 let animation
+
+// from https://raw.githubusercontent.com/oliviertassinari/react-swipeable-views/82bcc19b409449bfabe3909d24de709a8d2c3995/packages/react-swipeable-views/src/SwipeableViews.js
+function addEventListenerEnhanced(node, event, handler, options) {
+  node.addEventListener(event, handler, options)
+}
 
 export default class TemplateWrapper extends React.Component {
   constructor() {
     super()
     this.state = {
       scroll_active: false,
-      offset_x: 0,
-      ref_x: 0,
-      display_x: 0,
-      start_ref: 0,
-      max_offset: 0,
-      time_ref: 0,
+      offset: 0,
+      ref: 0,
+      display: 0,
+      c_width: 0,
+      c_height: 0,
+      c_left: 0,
+      c_top: 0,
+      image_width: 0,
     }
-    this.setMyRef = element => {
-      this.myRef = element
+    this.setContainerRef = element => {
+      this.containerRef = element
     }
-  }
-
-  componentDidMount() {
-    let me = this
-    if (window) {
-      window.addEventListener('resize', () => {
-        me.setState({ scrol_active: false, scroller: lh(0.25), offset: 0 })
-      })
+    this.setImageRef = element => {
+      this.imageRef = element
     }
   }
 
   runAutoScroll(timestamp, amplitude) {
     let me = this
-    let timeConstant = 200
+    let timeConstant = 150
     function autoScroll() {
+      let max_offset = me.state.image_width - me.state.c_width
       let elapsed = Date.now() - timestamp
       let delta = -amplitude * Math.exp(-elapsed / timeConstant)
       if (delta > 0.5 || delta < -0.5) {
-        let new_offset = me.state.display_x - delta * 1
+        let new_offset = me.state.display - delta * 1
         if (new_offset > 0) {
-          me.setState({ display_x: 0, offset_x: 0 })
+          me.setState({ display: 0, offset: 0 })
           cancelAnimationFrame(animation)
-        } else if (new_offset < -me.state.max_offset) {
+        } else if (new_offset < -max_offset) {
           me.setState({
-            display_x: -me.state.max_offset,
-            offset_x: -me.state.max_offset,
+            display: -max_offset,
+            offset: -max_offset,
           })
           cancelAnimationFrame(animation)
         } else {
-          me.setState({ display_x: new_offset })
+          me.setState({ display: new_offset })
           animation = requestAnimationFrame(autoScroll)
         }
       } else {
         me.setState({
-          offset_x: me.state.display_x,
+          offset: me.state.display,
         })
       }
     }
@@ -85,223 +62,221 @@ export default class TemplateWrapper extends React.Component {
   }
 
   getDir(x, y) {
-    // getDir from https://tympanus.net/TipsTricks/DirectionAwareHoverEffect/
-    let { offset_top, offset_left, width, height } = this.state
+    // from https://tympanus.net/TipsTricks/DirectionAwareHoverEffect/
+    let { c_top, c_left, c_width, c_height } = this.state
     let _x =
-      (x - offset_left - width / 2) * (width > height ? height / width : 1)
+      (x - c_left - c_width / 2) * (c_width > c_height ? c_height / c_width : 1)
     let _y =
-      (y - offset_top - height / 2) * (height > width ? width / height : 1)
-    // the angle and the direction from where the mouse came in/went out clockwise (TRBL=0123);
-    // first calculate the angle of the point,
-    // add 180 deg to get rid of the negative values
-    // divide by 90 to get the quadrant
-    // add 3 and do a modulo by 4  to shift the quadrants to a proper clockwise TRBL (top/right/bottom/left) **/
+      (y - c_top - c_height / 2) * (c_height > c_width ? c_width / c_height : 1)
     let direction =
       Math.round((Math.atan2(_y, _x) * (180 / Math.PI) + 180) / 90 + 3) % 4
     return direction
   }
 
-  initializeScroll(x, myRef) {
-    let bounding = myRef.getBoundingClientRect()
-    let offset_top = bounding.top + document.documentElement.scrollTop
-    let offset_left = bounding.left
-    let height = myRef.clientHeight
-    let width = myRef.clientWidth
+  setImageDimensions(image) {
+    let image_width = image.clientWidth
     this.setState({
-      scroll_active: true,
-      ref_x: x,
-      offset_top: offset_top,
-      height: height,
-      offset_left: offset_left,
-      width: width,
+      image_width: image_width,
     })
   }
 
+  setDimensions(container) {
+    let bounding = container.getBoundingClientRect()
+    let offset_top = bounding.top + document.documentElement.scrollTop
+    let offset_left = bounding.left
+    let height = container.clientHeight
+    let width = container.clientWidth
+    this.setState({
+      window_width: window.innerWidth,
+      c_width: width,
+      c_height: height,
+      c_left: offset_left,
+      c_top: offset_top,
+    })
+  }
+
+  initializeScroll(x, container) {
+    this.setState({
+      scroll_active: true,
+      ref: x,
+    })
+  }
+
+  handleTouchStart = e => {
+    cancelAnimationFrame(animation)
+    let touch = e.touches[0]
+    let x = touch.clientX
+    this.setState({
+      offset: this.state.display,
+      ref: x,
+      time_ref: Date.now(),
+    })
+  }
+
+  handleTouchMove = e => {
+    let touch = e.touches[0]
+    let x = touch.clientX
+    let delta = x - this.state.ref
+    let max_offset = this.state.image_width - this.state.c_width
+    let new_offset = delta + this.state.offset
+    if (new_offset > 0) {
+      this.setState({ display: 0, offset: 0 })
+      cancelAnimationFrame(animation)
+    } else if (new_offset < -max_offset) {
+      this.setState({
+        display: -max_offset,
+        offset_x: -max_offset,
+      })
+      cancelAnimationFrame(animation)
+    } else {
+      this.setState({
+        display: new_offset,
+      })
+    }
+  }
+
+  handleTouchEnd = e => {
+    let now = Date.now()
+    let t = now - this.state.time_ref
+    let d = this.state.display - this.state.offset
+    let velocity = d / t * 100
+    if (velocity > 8 || velocity < -8) {
+      let amplitude = 0.75 * velocity
+      this.runAutoScroll(now, amplitude)
+    }
+    this.setState({
+      offset: this.state.display,
+    })
+  }
+
+  componentDidMount() {
+    if (window) {
+      this.setDimensions(this.containerRef)
+      window.addEventListener('resize', () => {
+        this.setDimensions(this.containerRef)
+        this.setImageRef(this.imageRef)
+      })
+    }
+    addEventListenerEnhanced(
+      this.containerRef,
+      'touchstart',
+      this.handleTouchStart,
+      {
+        passive: false,
+      }
+    )
+    addEventListenerEnhanced(
+      this.containerRef,
+      'touchmove',
+      this.handleTouchMove,
+      {
+        passive: false,
+      }
+    )
+    addEventListenerEnhanced(
+      this.containerRef,
+      'touchend',
+      this.handleTouchEnd,
+      {
+        passive: false,
+      }
+    )
+  }
+
   render() {
-    let me = this
     let report_strip = this.props.report_strip
-    let frontmatter = this.props.frontmatter
-    let window_width = window.innerWidth
-    let current_width = Math.min(window_width, 740)
-    let width_offset = window_width > 740 ? (window_width - 740) / 2 : 0
-
-    let strip_aspect = 5.3125
-    let font_size = getFontSize(window_width)
-    let strip_width = lh_raw(8) * font_size * strip_aspect
-    let scroll_comp = -me.state.display_x / (strip_width - current_width)
-    let comp_scroller = scroll_comp * me.state.width
-
     return (
-      <Relative style={{ height: lh(8) }}>
-        <ReportMarker
-          style={{
-            background: frontmatter.background,
-            width: comp_scroller,
-            opacity: me.state.scroll_active ? 0.2 : 0,
-          }}
-        />
-        <div
-          ref={this.setMyRef}
-          style={{
-            position: 'absolute',
-            left: 0,
-            top: 0,
-            right: 0,
-            bottom: 0,
-            backgroundSize: 'auto 100%',
-            backgroundPosition: '0 0',
-            backgroundColor: '#efefef',
-            backgroundRepeat: 'no-repeat',
-            cursor: 'ew-resize',
-            backgroundImage: `url('${report_strip}')`,
-            backgroundPosition: `${me.state.display_x}px 0`,
-            transition: 'background 0.01s linear',
-          }}
-          onMouseEnter={function(e) {
-            let x = e.clientX
-            me.initializeScroll(x, me.myRef)
-          }}
-          onMouseLeave={function(e) {
-            var x = e.clientX
-            var y = e.clientY
-            let direction = me.getDir(x, y)
-            let strip_aspect = 5.3125
-            let font_size = getFontSize(window_width)
-            let strip_width = lh_raw(8) * font_size * strip_aspect
-            // 1 is exit right
-            // 3 is exit left
-            let offset_x = me.state.display_x
-            let display_x = me.state.display_x
-            if (direction === 3) {
-              offset_x = 0
-              display_x = offset_x
-            } else if (direction === 1) {
-              offset_x = -(strip_width - me.state.width)
-              display_x = offset_x
-            }
-            me.setState({
-              offset_x: offset_x,
-              display_x: display_x,
-              scroll_active: false,
-            })
-          }}
-          onMouseMove={function(e) {
-            var x = e.clientX
-            if (!me.state.scroll_active) {
-              me.initializeScroll(x, me.myRef)
+      <div
+        style={{
+          height: lh(8),
+          width: '100%',
+          overflow: 'hidden',
+          cursor: 'ew-resize',
+        }}
+        ref={this.setContainerRef}
+        onMouseEnter={e => {
+          let x = e.clientX
+          this.initializeScroll(x, this.containerRef)
+        }}
+        onMouseMove={e => {
+          let { ref, c_width, c_left, image_width, offset } = this.state
+          let x = e.clientX
+          let rel_x = x - c_left
+          if (!this.state.scroll_active) {
+            this.initializeScroll(x, this.containerRef)
+          }
+          let delta = x - ref
+          let max_offset = image_width - c_width
+          let new_offset
+          if (delta > 0) {
+            let domain = c_width - (ref - c_left)
+            let delta_percent = delta / domain
+            let range = max_offset + offset
+            new_offset = delta_percent * range - offset
+          } else {
+            let domain = ref - c_left
+            let delta_percent = 1 + delta / domain
+            let range = -offset
+            new_offset = delta_percent * range
+          }
+          if (
+            (delta > 0 && new_offset > max_offset - 10) ||
+            (delta < 0 && new_offset < 10)
+          ) {
+            // Snap to edge
+            if (new_offset < 10) {
+              new_offset = 0
             } else {
-              let _x = x - width_offset
-              let ref_x_element = me.state.ref_x - width_offset
-              let strip_aspect = 5.3125
-              let font_size = getFontSize(window_width)
-              let strip_width = lh_raw(8) * font_size * strip_aspect
-              let max_offset = strip_width - me.state.width
-              let scroll_percent = _x / me.state.width
-              let scroll_x =
-                scroll_percent * (me.state.width - lh_raw(0.5) * font_size) +
-                lh_raw(0.25) * font_size
-              let delta = x - me.state.ref_x
-              if (delta > 0) {
-                let domain = current_width - ref_x_element
-                let delta_percent = delta / domain
-                let range = strip_width + me.state.offset_x - current_width
-                let new_offset = delta_percent * range - me.state.offset_x
-                if (new_offset > strip_width - current_width - 10) {
-                  new_offset = strip_width - current_width
-                  me.setState({
-                    ref_x: x,
-                    offset_x: -new_offset,
-                    display_x: -new_offset,
-                  })
-                } else {
-                  me.setState({
-                    display_x: -new_offset,
-                  })
-                }
-              } else {
-                let domain = ref_x_element
-                let delta_percent = 1 + delta / ref_x_element
-                let range = -me.state.offset_x
-                let new_offset = delta_percent * range
-                if (new_offset < 10) {
-                  new_offset = 0
-                  me.setState({
-                    ref_x: x,
-                    offset_x: -new_offset,
-                    display_x: -new_offset,
-                  })
-                } else {
-                  me.setState({
-                    display_x: -new_offset,
-                  })
-                }
-              }
+              new_offset = max_offset
             }
-          }}
-          onTouchStart={function(e) {
-            let touch = e.touches[0]
-            let strip_aspect = 5.3125
-            let window_width = window.innerWidth
-            let font_size = getFontSize(window_width)
-            let strip_width = lh_raw(8) * font_size * strip_aspect
-            let max_offset = strip_width - window_width
-            cancelAnimationFrame(animation)
-            me.setState({
-              max_offset: max_offset,
-              offset_x: me.state.display_x,
-              time_ref: Date.now(),
-              ref_x: touch.clientX,
+            this.setState({
+              ref: x,
+              offset: -new_offset,
+              display: -new_offset,
             })
-          }}
-          onTouchMove={function(e) {
-            let touch = e.touches[0]
-            e.preventDefault()
-            let x = touch.clientX
-            let delta = x - me.state.ref_x
-            let new_offset = delta + me.state.offset_x
-            if (new_offset > 0) {
-              me.setState({ display_x: 0, offset_x: 0 })
-              cancelAnimationFrame(animation)
-            } else if (new_offset < -me.state.max_offset) {
-              me.setState({
-                display_x: -me.state.max_offset,
-                offset_x: -me.state.max_offset,
-              })
-              cancelAnimationFrame(animation)
-            } else {
-              me.setState({
-                display_x: new_offset,
-              })
-            }
-          }}
-          onTouchEnd={function(e) {
-            let now = Date.now()
-            let t = now - me.state.time_ref
-            let d = me.state.display_x - me.state.offset_x
-            let velocity = d / t * 100
-            if (velocity > 8 || velocity < -8) {
-              let amplitude = 0.75 * velocity
-              me.runAutoScroll(now, amplitude)
-              // requestAnimationFrame(autoScroll);
-            }
-            me.setState({
-              offset_x: me.state.display_x,
+          } else {
+            this.setState({
+              display: -new_offset,
             })
+          }
+        }}
+        onMouseLeave={e => {
+          let x = e.clientX
+          let y = e.clientY
+          let dir = this.getDir(x, y)
+          // 1 is exit right
+          // 3 is exit left
+          let _offset = this.state.display
+          let _display = this.state.display
+          if (dir === 3) {
+            _offset = 0
+            _display = _offset
+          } else if (dir === 1) {
+            let max_offset = this.state.image_width - this.state.c_width
+            _offset = -max_offset
+            _display = _offset
+          }
+          this.setState({
+            offset: _offset,
+            display: _display,
+            scroll_active: false,
+          })
+        }}
+      >
+        <img
+          ref={this.setImageRef}
+          style={{
+            height: lh(8),
+            width: 'auto',
+            maxWidth: 'none',
+            transform: `translate3d(${this.state.display}px, 0, 0)`,
           }}
+          onLoad={() => {
+            this.setImageDimensions(this.imageRef)
+          }}
+          src={report_strip}
         />
-        {/* <div */}
-        {/*   style={{ */}
-        {/*     position: 'absolute', */}
-        {/*     height: '100%', */}
-        {/*     width: '2px', */}
-        {/*     left: `${me.state.ref_x - width_offset}px`, */}
-        {/*     marginLeft: '-1px', */}
-        {/*     top: 0, */}
-        {/*     background: 'red', */}
-        {/*     pointerEvents: 'none', */}
-        {/*   }} */}
-        {/* /> */}
-      </Relative>
+      </div>
     )
   }
 }
