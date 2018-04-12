@@ -3,7 +3,7 @@ path: "/ff06/the-definition-of-success"
 title: "The Definition of Success"
 report: "ff06"
 report_title: "Interpretability"
-preview_image: "./ff06-scifi-01.svg"
+preview_image: "./ff06-scifi-01.png"
 background: "#eb6e62"
 author: 'Grant Custer'
 author_link: 'https://twitter.com/GrantCuster'

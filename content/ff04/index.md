@@ -3,7 +3,7 @@ path: "/ff04/mars-terraform-expansion-s-217"
 title: "Mars Terraform Expansion S-217"
 report: "ff04"
 report_title: "Summarization"
-preview_image: "./ff04-scifi_clusters.svg"
+preview_image: "./ff04-scifi_clusters.png"
 background: "#3277ba"
 author: 'Grant Custer'
 author_link: 'https://twitter.com/GrantCuster'
