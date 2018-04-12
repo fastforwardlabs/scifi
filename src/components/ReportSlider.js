@@ -204,40 +204,41 @@ export default class TemplateWrapper extends React.Component {
           let rel_x = x - c_left
           if (!this.state.scroll_active) {
             this.initializeScroll(x, this.containerRef)
-          }
-          let delta = x - ref
-          let max_offset = image_width - c_width
-          let new_offset
-          if (delta > 0) {
-            let domain = c_width - (ref - c_left)
-            let delta_percent = delta / domain
-            let range = max_offset + offset
-            new_offset = delta_percent * range - offset
           } else {
-            let domain = ref - c_left
-            let delta_percent = 1 + delta / domain
-            let range = -offset
-            new_offset = delta_percent * range
-          }
-          if (
-            (delta > 0 && new_offset > max_offset - 10) ||
-            (delta < 0 && new_offset < 10)
-          ) {
-            // Snap to edge
-            if (new_offset < 10) {
-              new_offset = 0
+            let delta = x - ref
+            let max_offset = image_width - c_width
+            let new_offset
+            if (delta > 0) {
+              let domain = c_width - (ref - c_left)
+              let delta_percent = delta / domain
+              let range = max_offset + offset
+              new_offset = delta_percent * range - offset
             } else {
-              new_offset = max_offset
+              let domain = ref - c_left
+              let delta_percent = 1 + delta / domain
+              let range = -offset
+              new_offset = delta_percent * range
             }
-            this.setState({
-              ref: x,
-              offset: -new_offset,
-              display: -new_offset,
-            })
-          } else {
-            this.setState({
-              display: -new_offset,
-            })
+            if (
+              (delta > 0 && new_offset > max_offset - 10) ||
+              (delta < 0 && new_offset < 10)
+            ) {
+              // Snap to edge
+              if (new_offset < 10) {
+                new_offset = 0
+              } else {
+                new_offset = max_offset
+              }
+              this.setState({
+                ref: x,
+                offset: -new_offset,
+                display: -new_offset,
+              })
+            } else {
+              this.setState({
+                display: -new_offset,
+              })
+            }
           }
         }}
         onMouseLeave={e => {
