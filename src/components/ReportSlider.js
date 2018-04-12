@@ -32,7 +32,7 @@ export default class TemplateWrapper extends React.Component {
 
   runAutoScroll(timestamp, amplitude) {
     let me = this
-    let timeConstant = 150
+    let timeConstant = 325
     function autoScroll() {
       let max_offset = me.state.image_width - me.state.c_width
       let elapsed = Date.now() - timestamp
@@ -141,7 +141,7 @@ export default class TemplateWrapper extends React.Component {
     let d = this.state.display - this.state.offset
     let velocity = d / t * 100
     if (velocity > 8 || velocity < -8) {
-      let amplitude = 0.75 * velocity
+      let amplitude = 0.5 * velocity
       this.runAutoScroll(now, amplitude)
     }
     this.setState({
