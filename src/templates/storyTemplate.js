@@ -13,6 +13,10 @@ export default ({ data }) => {
   let title = `${frontmatter.title} - Cloudera Fast Forward Labs`
   let description = excerpt
 
+  let image_preview = frontmatter.preview_image
+    ? domain + frontmatter.preview_image.publicURL
+    : null
+
   return (
     <div>
       <Helmet
@@ -36,7 +40,7 @@ export default ({ data }) => {
           },
           {
             name: 'og:image',
-            content: domain + frontmatter.preview_image.publicURL,
+            content: image_preview,
           },
           {
             name: 'twitter:card',
