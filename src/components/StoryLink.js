@@ -90,11 +90,11 @@ const LinkIndicator = styled.div`
 
 const AnimateLink = HighlightParentLink.extend`
   position: relative;
-  margin: 0 -${lh1} ${lh1};
-  padding: 0 ${lh1} ${lh(0)};
+  margin: 0 -${lh1} ${lh(0.5)};
+  padding: 0 ${lh1} ${lh(0.5)};
   ${breakpoint} {
-    margin: 0 0 ${lh1};
-    padding: 0 0 ${lh(0)};
+    margin: 0 0 ${lh(0.5)};
+    padding: 0 0 ${lh(0.5)};
   }
 `
 const ExcerptHolder = Relative.extend`

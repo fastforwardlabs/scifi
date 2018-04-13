@@ -242,7 +242,7 @@ export let BottomBorder = styled.div`
   left: ${lh(0.75)};
   right: ${lh(0.75)};
   height: ${lh(0.5)};
-  bottom: -${lh(0.5)};
+  bottom: 0;
   ${props => {
     let light_bg = chroma(props.bg)
       .brighten(0.5)
