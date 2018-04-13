@@ -138,9 +138,7 @@ export default class TemplateWrapper extends React.Component {
   checkBreakpoint() {
     if (window) {
       let window_width = window.innerWidth
-      console.log(window_width)
       if (window_width < 560) {
-        console.log('set true')
         this.setState({ mobile_mode: true })
       } else {
         this.setState({ mobile_mode: false })
