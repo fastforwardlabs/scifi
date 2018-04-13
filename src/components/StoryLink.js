@@ -281,7 +281,7 @@ export default class TemplateWrapper extends React.Component {
               <div
                 style={{
                   background: '#fff',
-                  boxShadow: `-${lh(0.52)} 0 0 #fff, ${lh(0.52)} 0 0 #fff`,
+                  boxShadow: `-${lh(0.25)} 0 0 #fff, ${lh(0.25)} 0 0 #fff`,
                 }}
               >
                 <Text italic>{node.excerpt}</Text>

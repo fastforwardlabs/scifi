@@ -239,10 +239,9 @@ export let HiddenHighlight = Highlight.extend`
 
 export let BottomBorder = styled.div`
   position: absolute;
-  left: ${lh(1.25)};
-  left: ${lh(0.5)};
-  right: ${lh(0.5)};
-  height: ${lh(2)};
+  left: ${lh(0.75)};
+  right: ${lh(0.75)};
+  height: ${lh(0.5)};
   bottom: -${lh(0.5)};
   ${props => {
     let light_bg = chroma(props.bg)

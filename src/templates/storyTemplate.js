@@ -11,7 +11,7 @@ export default ({ data }) => {
   const { frontmatter, excerpt, fields, html } = markdownRemark
 
   let title = `${frontmatter.title} - Cloudera Fast Forward Labs`
-  let description = excerpt
+  let description = `by ${frontmatter.author}. ` + excerpt
 
   let image_preview = frontmatter.preview_image
     ? domain + frontmatter.preview_image.publicURL
