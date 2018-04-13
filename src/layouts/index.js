@@ -97,6 +97,10 @@ export default class TemplateWrapper extends React.Component {
               content: description,
             },
             {
+              name: "theme-color",
+              content: '#00dcec'
+            },
+            {
               name: 'twitter:image',
               content: domain + '/cffl-scifi.png',
             },
