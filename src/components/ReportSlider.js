@@ -199,7 +199,6 @@ export default class TemplateWrapper extends React.Component {
           height: lh(8),
           width: '100%',
           overflow: 'hidden',
-          cursor: 'ew-resize',
         }}
         ref={this.setContainerRef}
         onMouseEnter={e => {
