@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import chroma from 'chroma-js'
 import Link from 'gatsby-link'
 
-export let domain = '//scifi.fastforwardlabs.com'
+export let domain = 'https://scifi.fastforwardlabs.com'
 
 export let line_height = 1.5
 
