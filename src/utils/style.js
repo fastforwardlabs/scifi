@@ -240,9 +240,10 @@ export let HiddenHighlight = Highlight.extend`
 export let BottomBorder = styled.div`
   position: absolute;
   left: ${lh(1.25)};
+  left: ${lh(0.5)};
+  right: ${lh(0.5)};
   height: ${lh(2)};
-  right: 0;
-  bottom: ${lh(0)};
+  bottom: -${lh(0.5)};
   ${props => {
     let light_bg = chroma(props.bg)
       .brighten(0.5)
@@ -320,34 +321,12 @@ export let WidthBreakout = styled.div`
 
 export let Topper = styled.div`
   position: relative;
-  height: ${lh(2)};
-  margin-bottom: -${lh1};
+  height: ${lh(1)};
   ${props => `background: ${props.bg};`};
-  &:after {
-    content: ' ';
-    position: absolute;
-    top: ${lh1};
-    left: ${lh05};
-    right: ${lh05};
-    background: #fff;
-    height: ${lh1};
-  }
-  ${breakpoint} {
-    &:after {
-      left: ${lh(0.25)};
-      right: ${lh(0.25)};
-    }
-  }
 `
 
 export let Bottomer = Topper.extend`
   z-index: -1;
-  margin-bottom: 0;
-  margin-top: -${lh(1)};
-  &:after {
-    top: auto;
-    bottom: ${lh1};
-  }
 `
 
 export let Seravek = styled.div`

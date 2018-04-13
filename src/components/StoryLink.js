@@ -56,9 +56,9 @@ let BookStretch = AbsStretch.extend`
   background-size: auto 100%;
   background-position: 0 0;
   background-color: #efefef;
-  animation: ${AnimateDown} 3.5s linear infinite;
-  animation-play-state: paused;
-  animation: none;
+  ${breakpoint} {
+    display: none;
+  }
 `
 
 let PreviewStretch = AbsStretch.extend`
@@ -66,9 +66,12 @@ let PreviewStretch = AbsStretch.extend`
   background-position: 0 0;
   background-color: #fff;
   clip-path: polygon(101% 0, 101% 100%, 0 100%);
-  animation: ${AnimateUp} 3.5s linear infinite;
-  animation-play-state: paused;
-  animation: none;
+  ${breakpoint} {
+    clip-path: none;
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+  }
 `
 
 const LinkIndicator = styled.div`
@@ -88,54 +91,18 @@ const LinkIndicator = styled.div`
 const AnimateLink = HighlightParentLink.extend`
   position: relative;
   margin: 0 -${lh1} ${lh1};
-  padding: 0 ${lh1} ${lh(0.5)};
-  &:hover {
-    ${BookStretch} {
-      animation: ${AnimateDown} 3.5s linear infinite;
-      animation-play-state: play;
-      animation: none;
-    }
-    ${PreviewStretch} {
-      animation: ${AnimateUp} 3.5s linear infinite;
-      animation-play-state: play;
-      animation: none;
-    }
-    ${LinkIndicator} {
-      right: ${lh(0.5)};
-      opacity: 1;
-    }
-    ${BookStretch} {
-      animation: none;
-    }
-    ${PreviewStretch} {
-      animation: none;
-    }
-  }
+  padding: 0 ${lh1} ${lh(0)};
   ${breakpoint} {
     margin: 0 0 ${lh1};
-    padding: 0 0 ${lh(0.5)};
-    &:hover {
-      ${BookStretch} {
-        animation: none;
-      }
-      ${PreviewStretch} {
-        animation: none;
-      }
-      ${LinkIndicator} {
-        right: ${lh(0.375)};
-      }
-    }
+    padding: 0 0 ${lh(0)};
   }
 `
 const ExcerptHolder = Relative.extend`
   max-height: ${lh(2)};
-  overflow-y: hidden;
-  padding-right: ${lh(0.75)};
-  padding-left: ${lh(1)};
-  ${breakpoint} {
-    padding-left: 0;
-    padding-right: ${lh(1)};
-  }y
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 `
 
 const Truncate = styled.div`
@@ -163,8 +130,39 @@ export default class TemplateWrapper extends React.Component {
       ref_y: 0,
       temp_x: 0,
       temp_y: 0,
+      mobile_mode: false,
+    }
+    this.onResize = this._onResize.bind(this)
+  }
+
+  checkBreakpoint() {
+    if (window) {
+      let window_width = window.innerWidth
+      console.log(window_width)
+      if (window_width < 560) {
+        console.log('set true')
+        this.setState({ mobile_mode: true })
+      } else {
+        this.setState({ mobile_mode: false })
+      }
     }
   }
+
+  _onResize() {
+    this.checkBreakpoint()
+  }
+
+  componentDidMount() {
+    if (window) {
+      this.checkBreakpoint()
+      window.addEventListener('resize', this.onResize)
+    }
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.onResize)
+  }
+
   render() {
     let me = this
     let node = this.props.node
@@ -235,7 +233,9 @@ export default class TemplateWrapper extends React.Component {
                 backgroundImage: `url('${
                   node.frontmatter.preview_image.publicURL
                 }')`,
-                backgroundPosition: `${-new_offset_x}px ${-new_offset_y}px`,
+                backgroundPosition: this.state.mobile_mode
+                  ? 'center center'
+                  : `${-new_offset_x}px ${-new_offset_y}px`,
               }}
             />
           </ImageHolder>
@@ -269,21 +269,27 @@ export default class TemplateWrapper extends React.Component {
           ) : null}
         </TitleContainer>
         <WidthBreakout style={{ zIndex: 3, position: 'relative' }}>
-          <ExcerptHolder style={{}}>
+          <div
+            style={{
+              height: '0.3rem',
+              width: '100%',
+              background: '#fff',
+              position: 'absolute',
+              bottom: '-0.3rem',
+            }}
+          />
+          <ExcerptHolder>
             <Container style={{ paddingTop: 0 }}>
               <div
                 style={{
                   background: '#fff',
-                  boxShadow: `-${lh(0.25)} 0 0 #fff, ${lh(0.25)} 0 0 #fff`,
+                  boxShadow: `-${lh(0.52)} 0 0 #fff, ${lh(0.52)} 0 0 #fff`,
                 }}
               >
-                <WhiteHighlight>
-                  <Text italic>{node.excerpt}</Text>
-                </WhiteHighlight>
+                <Text italic>{node.excerpt}</Text>
               </div>
             </Container>
           </ExcerptHolder>
-          <LinkIndicator>→</LinkIndicator>
         </WidthBreakout>
         <Relative style={{ zIndex: 2 }}>
           <WidthBreakout />

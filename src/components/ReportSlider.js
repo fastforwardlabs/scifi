@@ -28,6 +28,7 @@ export default class TemplateWrapper extends React.Component {
     this.setImageRef = element => {
       this.imageRef = element
     }
+    this.onResize = this._onResize.bind(this)
   }
 
   runAutoScroll(timestamp, amplitude) {
@@ -149,13 +150,16 @@ export default class TemplateWrapper extends React.Component {
     })
   }
 
+  _onResize() {
+    this.setDimensions(this.containerRef)
+    this.setImageDimensions(this.imageRef)
+  }
+
   componentDidMount() {
+    let me = this
     if (window) {
       this.setDimensions(this.containerRef)
-      window.addEventListener('resize', () => {
-        this.setDimensions(this.containerRef)
-        this.setImageRef(this.imageRef)
-      })
+      window.addEventListener('resize', this.onResize)
     }
     addEventListenerEnhanced(
       this.containerRef,
@@ -181,6 +185,10 @@ export default class TemplateWrapper extends React.Component {
         passive: false,
       }
     )
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.onResize)
   }
 
   render() {
