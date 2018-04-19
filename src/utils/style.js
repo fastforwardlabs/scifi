@@ -85,6 +85,31 @@ export let Highlight = styled.span`
   }};
 `
 
+export let SmallHighlight = styled.span`
+  ${props => {
+    let highlight
+    if (props.bg) {
+      highlight = chroma(props.bg)
+        .brighten(0.5)
+        .hex()
+    } else {
+      highlight = chroma(colors.cyan)
+        .brighten(0.5)
+        .desaturate(0.8)
+        .hex()
+    }
+    return `
+    padding: ${props.is_title ? `0` : `0.16em 0;`}
+    box-shadow: ${
+      props.is_title
+        ? `-${lh(0.5)} 0 0 ${highlight}, ${lh(0.5)} 0 0 ${highlight};`
+        : `-${lh(0.25)} 0 0 ${highlight}, ${lh(0.25)} 0 0 ${highlight};`
+    }
+    background: ${highlight};
+    transition: all 0.1s linear;`
+  }};
+`
+
 export let UnderlineInnerLink = styled.span`
   ${props => {
     let bg = chroma(props.bg)
@@ -256,6 +281,25 @@ export let BottomBorder = styled.div`
   }
 `
 
+export let Arrow = styled.div`
+  font-weight: bold;
+  position: absolute;
+  right: -${lh(1)};
+  bottom: 0;
+  display: block;
+  width: ${lh(1.25)};
+  height: ${lh(1)};
+  text-align: center;
+  line-height: 1.3;
+  ${props => {
+    let light_bg = chroma(props.bg)
+      .brighten(0.5)
+      .hex()
+    return `background: ${light_bg};`
+  }};
+  transition: all 0.1s linear;
+`
+
 export let HighlightParentLink = styled(Link)`
   display: block;
   color: #222;
@@ -277,7 +321,23 @@ export let HighlightParentLink = styled(Link)`
       background: ${bg};`
     }};
   }
+  &:hover ${SmallHighlight} {
+    ${props => {
+      let bg
+      if (props.bg) {
+        bg = props.bg
+      } else {
+        bg = colors.cyan
+      }
+      return `
+      box-shadow:  ${`-${lh(0.25)} 0 0 ${bg}, ${lh(0.25)} 0 0 ${bg};`}
+      background: ${bg};`
+    }};
+  }
   &:hover ${BottomBorder} {
+    ${props => `background: ${props.bg}`};
+  }
+  &:hover ${Arrow} {
     ${props => `background: ${props.bg}`};
   }
   &:hover ${UnderlineInnerLink}, &:hover ${HiddenUnderlineInnerLink} {

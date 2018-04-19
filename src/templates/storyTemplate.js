@@ -59,9 +59,9 @@ export default ({ data }) => {
             content: image_preview,
           },
           {
-            name: 'theme-color',,
-            content: frontmatter.background
-          }
+            name: 'theme-color',
+            content: frontmatter.background,
+          },
         ]}
       />
       <ReportInfo frontmatter={frontmatter} fields={fields} />

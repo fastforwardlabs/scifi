@@ -30,5 +30,15 @@ module.exports = {
         ],
       },
     },
+    {
+      resolve: `gatsby-plugin-google-analytics`,
+      options: {
+        trackingId: 'UA-53030428-14',
+        head: false,
+        anonymize: true,
+        respectDNT: true,
+        exclude: ['/preview/**', '/do-not-track/me/too/'],
+      },
+    },
   ],
 }

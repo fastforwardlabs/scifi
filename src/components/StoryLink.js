@@ -10,6 +10,7 @@ import {
   Container,
   LinkBlock,
   Highlight,
+  SmallHighlight,
   WhiteHighlight,
   HighlightParentLink,
   UnderlineInnerLink,
@@ -18,6 +19,7 @@ import {
   Relative,
   WidthBreakout,
   BottomBorder,
+  Arrow,
 } from '../utils/style.js'
 
 let desktop_num = 8
@@ -90,8 +92,8 @@ const LinkIndicator = styled.div`
 
 const AnimateLink = HighlightParentLink.extend`
   position: relative;
-  margin: 0 -${lh1} ${lh(0.5)};
-  padding: 0 ${lh1} ${lh(0.5)};
+  margin: 0 -${lh1} 0;
+  padding: 0 ${lh1} ${lh1};
   ${breakpoint} {
     margin: 0 0 ${lh(0.5)};
     padding: 0 0 ${lh(0.5)};
@@ -215,7 +217,7 @@ export default class TemplateWrapper extends React.Component {
           })
         }}
       >
-        <BottomBorder bg={node.frontmatter.background} />
+        {/* <BottomBorder bg={node.frontmatter.background} /> */}
         <WidthBreakout>
           <ImageHolder>
             <BookStretch
@@ -267,31 +269,36 @@ export default class TemplateWrapper extends React.Component {
           ) : null}
         </TitleContainer>
         <WidthBreakout style={{ zIndex: 3, position: 'relative' }}>
-          <div
-            style={{
-              height: '0.3rem',
-              width: '100%',
-              background: '#fff',
-              position: 'absolute',
-              bottom: '-0.3rem',
-            }}
-          />
+          {/* <div */}
+          {/*   style={{ */}
+          {/*     height: '0.3rem', */}
+          {/*     width: '100%', */}
+          {/*     background: '#fff', */}
+          {/*     position: 'absolute', */}
+          {/*     bottom: '-0.3rem', */}
+          {/*   }} */}
+          {/* /> */}
           <ExcerptHolder>
             <Container style={{ paddingTop: 0 }}>
-              <div
-                style={{
-                  background: '#fff',
-                  boxShadow: `-${lh(0.25)} 0 0 #fff, ${lh(0.25)} 0 0 #fff`,
-                }}
-              >
-                <Text italic>{node.excerpt}</Text>
+              <div>
+                <WhiteHighlight>
+                  <Text italic>{node.excerpt}</Text>
+                </WhiteHighlight>
               </div>
             </Container>
           </ExcerptHolder>
         </WidthBreakout>
-        <Relative style={{ zIndex: 2 }}>
-          <WidthBreakout />
-        </Relative>
+          <div style={{  fontStyle: 'italic', textAlign: 'right' }}>
+            <UnderlineInnerLink bg={node.frontmatter.background}>
+              read story
+            </UnderlineInnerLink>
+          </div>
+        {/* <Relative style={{ zIndex: 4 }}> */}
+        {/*   <Arrow bg={node.frontmatter.background}>→</Arrow> */}
+        {/* </Relative> */}
+        {/* <Relative style={{ zIndex: 2 }}> */}
+        {/*   <WidthBreakout /> */}
+        {/* </Relative> */}
       </AnimateLink>
     )
   }
