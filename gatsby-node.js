@@ -47,22 +47,15 @@ exports.onCreateNode = ({ node, boundActionCreators, getNode }) => {
   const { createNodeField } = boundActionCreators
   if (node.internal.type === `MarkdownRemark`) {
     let report_image = null
-    let report_gif = null
     let report_strip = null
     if (node.frontmatter.report) {
       report_image = `./${node.frontmatter.report}-01.png`
-      report_gif = `./${node.frontmatter.report}.gif`
       report_strip = `./${node.frontmatter.report}_strip.png`
     }
     createNodeField({
       node,
       name: `report_image`,
       value: report_image,
-    })
-    createNodeField({
-      node,
-      name: `report_gif`,
-      value: report_gif,
     })
     createNodeField({
       node,

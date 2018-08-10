@@ -170,6 +170,66 @@ export let UnderlineLink = styled(Link)`
   }};
 `
 
+export let FootnoteInline = styled.div`
+  ${props => {
+    let light_bg, bg
+    if (props.bg) {
+      light_bg = chroma(props.bg)
+        .brighten(0.5)
+        .hex()
+      bg = props.bg
+    } else {
+      light_bg = chroma(colors.cyan)
+        .brighten(0.5)
+        .desaturate(0.8)
+        .hex()
+      bg = colors.cyan
+    }
+    return `
+      .footnote_container {
+        .footnote_trigger {
+          padding: 0 4px;
+          background: #fff;
+          cursor: pointer;
+          user-select: none;
+          sup {
+            top: -0.5em;
+          }
+          a {
+            color: ${bg};
+            font-weight: bold;
+            text-decoration: none;
+          }
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+        .footnote_content {
+          display: none;
+          .footnote-backref {
+            color: ${bg};
+            font-weight: bold;
+            text-decoration: none;
+          }
+        }
+        &.active {
+         .footnote_content {
+            display: block;
+            font-size: 18px;
+            margin: 0.75rem 0;
+            .footnote_content_number {
+              font-weight: bold;
+              color: ${bg};
+              &:hover {
+                text-decoration: underline;
+              }
+            }
+          }
+        }
+      }`
+  }};
+`
+
 // There is probably a cleaner solution to this
 export let ExternalUnderlineLink = styled.a`
   ${props => {

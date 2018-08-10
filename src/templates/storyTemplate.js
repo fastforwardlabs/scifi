@@ -96,9 +96,6 @@ export const pageQuery = graphql`
             }
           }
         }
-        report_gif {
-          publicURL
-        }
         report_strip {
           publicURL
         }

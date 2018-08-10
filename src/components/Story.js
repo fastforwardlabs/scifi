@@ -24,6 +24,7 @@ import {
   UnderlineLinkContainer,
   Seravek,
   BareH1,
+  FootnoteInline,
 } from '../utils/style.js'
 
 const NoParagraph = styled.div`
@@ -82,7 +83,9 @@ export default ({ frontmatter, fields, html }) => {
         ) : null}
       </Relative>
       <Relative>
-        <Seravek dangerouslySetInnerHTML={{ __html: html }} />
+        <FootnoteInline bg={frontmatter.background}>
+          <Seravek dangerouslySetInnerHTML={{ __html: html }} />
+        </FootnoteInline>
       </Relative>
       <WidthBreakout>
         <Bottomer bg={frontmatter.background} />
