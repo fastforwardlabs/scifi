@@ -6,10 +6,18 @@ report_title: "Multi-Task Learning"
 preview_image: "./08-01.png"
 background: "#19aee6"
 author: "Umair Kazi"
-author_link: ""
-prologue: 'This story, written in response to Cloudera Fast Forward Labs’ research on multi-task learning, does not feature machines, artificial intelligence, or robots, either marvelous or terrifying. It is not set in any future; instead, it takes place in a mythical past. This story doesn’t illustrate the promises and pitfalls of machine learning or multi-task learning, but what I hope it does is capture the paradoxes of knowledge: how truth is defined by anthropocentric values, against which we test definitions, outcomes, and probabilities. The story is inspired by Jorge Luis Borges, whose stories breached–as far as stories are able to breach–against anthropogenic limitations. The title “Havurtat” comes from an ancient Persian word, meaning “Perfection.”'
+author_link: "https://twitter.com/nightcolander"
+prologue: 'inspired by Jorge Luis Borges'
 report_sentence: 'In this report, we show how, for complex tasks, multi-task learning can improve the accuracy, inference, and maintainability of models.'
 ---
+
+<div class="md_image full_width">
+
+![A grid of brick buildings, all exactly the same.](./08-01.svg)
+
+</div>
+
+
 
 There is a consensus among archaeologists and historians of the Near
 East that the lost city of Havurtat[^ As far as we know,
