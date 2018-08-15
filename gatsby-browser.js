@@ -47,12 +47,13 @@ exports.onRouteUpdate = ({ location }) => {
         footnote_container.appendChild(footnote_trigger)
         footnote_container.appendChild(content_div)
         footnote.parentNode.replaceChild(footnote_container, footnote)
-        function toggleFootnote(footnote_container) {
+        function toggleFootnote(footnote_container, e) {
           if (footnote_container.classList.contains('active')) {
             footnote_container.classList.remove('active')
           } else {
             footnote_container.classList.add('active')
           }
+          e.preventDefault()
         }
         footnote_trigger.addEventListener(
           'click',

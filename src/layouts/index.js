@@ -7,6 +7,7 @@ import Header from '../components/Header.js'
 import StoryLinks from '../components/StoryLinks.js'
 import About from '../components/About.js'
 import { lh1, domain } from '../utils/style.js'
+import { throttle } from 'lodash'
 
 import './fonts.css'
 import './index.css'
@@ -22,6 +23,34 @@ let PageContainer = styled.div`
 `
 
 export default class TemplateWrapper extends React.Component {
+  constructor(props) {
+    super(props)
+    // Mouse tracking was for hovering over story links, I abandoned this
+    // approach but might return to it
+    this.state = {
+      x: 0,
+      x: 0,
+      scroll: 0,
+    }
+  }
+
+  setMouse = throttle(e => {
+    this.setState({ x: e.clientX, y: e.clientY, scroll: window.pageYOffset })
+  }, 1)
+
+  setScroll = throttle(() => {
+    this.setState({ scroll: window.pageYOffset })
+  }, 1)
+
+  handleMouse(e) {
+    e.persist()
+    this.setMouse(e)
+  }
+
+  componentDidMount() {
+    // window.addEventListener('scroll', this.setScroll, { passive: true })
+  }
+
   render() {
     let { children, data, location } = this.props
 
@@ -97,8 +126,8 @@ export default class TemplateWrapper extends React.Component {
               content: description,
             },
             {
-              name: "theme-color",
-              content: '#00dcec'
+              name: 'theme-color',
+              content: '#00dcec',
             },
             {
               name: 'twitter:image',
@@ -116,7 +145,13 @@ export default class TemplateWrapper extends React.Component {
         <PageContainer>
           <Header report_page={report_page} />
           <div>{children()}</div>
-          <StoryLinks report_page={report_page} posts={posts} />
+          <StoryLinks
+            report_page={report_page}
+            posts={posts}
+            x={this.state.x}
+            y={this.state.y}
+            scroll={this.state.scroll}
+          />
           <About report_page={report_page} />
         </PageContainer>
       </div>

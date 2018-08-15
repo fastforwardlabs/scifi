@@ -12,7 +12,7 @@ import {
 } from '../utils/style.js'
 import StoryLink from './StoryLink.js'
 
-export default ({ report_page, posts }) => {
+export default ({ report_page, posts, x, y, scroll }) => {
   return (
     <Container>
       {report_page ? (
@@ -20,8 +20,15 @@ export default ({ report_page, posts }) => {
           <Text italic>more stories</Text>
         </div>
       ) : null}
-      {posts.map(({ node }) => (
-        <StoryLink key={node.frontmatter.report} node={node} />
+      {posts.map(({ node }, i) => (
+        <StoryLink
+          key={node.frontmatter.report}
+          node={node}
+          story_i={i}
+          x={x}
+          y={y}
+          scroll={scroll}
+        />
       ))}
     </Container>
   )
